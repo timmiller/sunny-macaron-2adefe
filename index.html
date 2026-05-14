@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stem Cell Biz-in-a-Box — Video Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #0d1117;
+    --dark2: #131a24;
+    --dark3: #1a2332;
+    --panel: #1e2d40;
+    --panel2: #243448;
+    --copper: #c87941;
+    --copper-light: #e09960;
+    --copper-pale: rgba(200,121,65,0.12);
+    --green: #4a9e7a;
+    --green-pale: rgba(74,158,122,0.12);
+    --text: #e8eff7;
+    --text-muted: #8fa5be;
+    --text-dim: #5a7290;
+    --border: rgba(200,121,65,0.2);
+    --border-subtle: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--copper);
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--copper-light); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  section:first-of-type { padding-top: 140px; }
+
+  .full-bleed {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(200,121,65,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(74,158,122,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 28px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--copper);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6vw, 78px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    max-width: 780px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--copper-light);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--copper-light);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 48px;
+    background: var(--border);
+    align-self: center;
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--copper);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .section-intro {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 56px;
+  }
+
+  /* WHY ORGANIC */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .why-card {
+    background: var(--panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .why-card:hover {
+    border-color: var(--border);
+    transform: translateY(-3px);
+  }
+
+  .why-card.accent {
+    border-color: var(--border);
+    background: linear-gradient(135deg, var(--panel), var(--dark3));
+  }
+
+  .why-card .icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--copper-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .why-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .why-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .why-card.wide {
+    grid-column: span 2;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .why-card.wide .icon { flex-shrink: 0; width: 56px; height: 56px; font-size: 26px; }
+
+  /* PLATFORM STRATEGY */
+  .platform-section {
+    background: var(--dark2);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 100px 60px;
+  }
+
+  .platform-inner { max-width: 1200px; margin: 0 auto; }
+
+  .platform-flow {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr 80px 1fr;
+    align-items: start;
+    gap: 0;
+    margin-top: 56px;
+  }
+
+  .flow-step {
+    background: var(--panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 32px 28px;
+    text-align: center;
+    position: relative;
+  }
+
+  .flow-step.highlight {
+    border-color: var(--border);
+    background: linear-gradient(160deg, var(--panel2), var(--dark3));
+  }
+
+  .flow-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--copper-pale);
+    color: var(--copper-light);
+    margin-bottom: 16px;
+  }
+
+  .flow-step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .flow-step p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+    color: var(--copper);
+    font-size: 28px;
+    opacity: 0.6;
+  }
+
+  .platform-why {
+    margin-top: 40px;
+    background: var(--green-pale);
+    border: 1px solid rgba(74,158,122,0.25);
+    border-radius: 12px;
+    padding: 28px 36px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .platform-why .badge {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    background: rgba(74,158,122,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-top: 2px;
+  }
+
+  .platform-why p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .platform-why strong { color: var(--text); font-weight: 600; }
+
+  /* TIER CARDS */
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .tier-card {
+    background: var(--panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .tier-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border);
+  }
+
+  .tier-card.featured {
+    border-color: var(--copper);
+    background: linear-gradient(160deg, var(--panel2), var(--dark3));
+    position: relative;
+  }
+
+  .tier-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: var(--copper);
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--dark);
+    padding: 6px;
+  }
+
+  .tier-header {
+    padding: 32px 28px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .tier-card.featured .tier-header { padding-top: 44px; }
+
+  .tier-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 10px;
+  }
+
+  .tier-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .tier-price {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--copper-light);
+    margin-bottom: 4px;
+  }
+
+  .tier-cadence {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .tier-body {
+    padding: 24px 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tier-goal {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-style: italic;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .deliverables { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .deliverables li {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .deliverables li::before {
+    content: '→';
+    color: var(--copper);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tier-metrics {
+    display: flex;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .tier-metric {
+    flex: 1;
+    text-align: center;
+    background: var(--dark3);
+    border-radius: 8px;
+    padding: 12px 8px;
+  }
+
+  .tier-metric .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--copper-light);
+    line-height: 1;
+  }
+
+  .tier-metric .lbl {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* SHORTS */
+  .shorts-section {
+    background: var(--dark2);
+    border-top: 1px solid var(--border-subtle);
+    padding: 80px 60px;
+  }
+
+  .shorts-inner { max-width: 1200px; margin: 0 auto; }
+
+  .shorts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+    align-items: center;
+  }
+
+  .shorts-visual {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .short-card {
+    background: var(--panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    aspect-ratio: 9/16;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 8px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .short-card:hover { transform: scale(1.04); }
+
+  .short-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--panel2), var(--dark));
+    opacity: 0.7;
+  }
+
+  .short-card .play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 28px; height: 28px;
+    background: var(--copper-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--copper-light);
+    border: 1px solid var(--border);
+  }
+
+  .short-label {
+    position: relative;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .shorts-copy h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .shorts-copy p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .shorts-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: var(--copper-pale);
+    border: 1px solid var(--border);
+    color: var(--copper-light);
+  }
+
+  /* CLOSER */
+  .closer {
+    background: linear-gradient(160deg, var(--dark3) 0%, var(--dark) 100%);
+    border-top: 1px solid var(--border);
+    padding: 100px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .closer::before {
+    content: '';
+    position: absolute;
+    top: -300px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse, rgba(200,121,65,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .closer-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .closer h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .closer p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--copper);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--copper-light);
+    transform: translateY(-2px);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+  }
+
+  /* RESPONSIVE TWEAKS */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section, .platform-section, .shorts-section, .closer { padding: 60px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-card.wide { flex-direction: column; gap: 16px; grid-column: span 1; }
+    .platform-flow { grid-template-columns: 1fr; }
+    .flow-arrow { display: none; }
+    .tiers { grid-template-columns: 1fr; }
+    .shorts-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Stem Cell Biz-in-a-Box · Video Strategy</div>
+  <ul class="nav-links">
+    <li><a href="#why">Why Organic</a></li>
+    <li><a href="#platform">Platform System</a></li>
+    <li><a href="#tiers">Content Tiers</a></li>
+    <li><a href="#shorts">Shorts</a></li>
+    <li><a href="#close">Next Steps</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow fade-up">Content Engine · Stem Cell Biz-in-a-Box</div>
+    <h1 class="fade-up">The Video System That <em>Fills Your Calendar</em> While You Treat Patients</h1>
+    <p class="hero-sub fade-up">A structured three-tier content engine combining real and AI-generated video — using your chosen brand person's likeness — distributed across platforms to build compounding organic authority for your practice.</p>
+    <div class="hero-stats fade-up">
+      <div class="stat">
+        <span class="stat-num">24</span>
+        <span class="stat-label">Foundation Videos</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="stat">
+        <span class="stat-num">Shorts</span>
+        <span class="stat-label">Cut From Every Video</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="stat">
+        <span class="stat-num">2×</span>
+        <span class="stat-label">Platform Distribution</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="stat">
+        <span class="stat-num">+4/mo</span>
+        <span class="stat-label">Retainer Cadence</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY ORGANIC -->
+<section id="why">
+  <div class="section-label">The Strategy</div>
+  <h2>Why Organic Video Changes Everything</h2>
+  <p class="section-intro">Paid ads rent attention. Organic video <em>owns</em> it. Here's why this system is the most durable lead generation asset you can build for a regenerative medicine practice.</p>
+
+  <div class="why-grid">
+    <div class="why-card accent">
+      <div class="icon">🔍</div>
+      <h3>Patients Research Before They Call</h3>
+      <p>The typical stem cell patient spends weeks researching before booking. When your videos dominate those searches, they arrive pre-educated and pre-sold — reducing your close time dramatically.</p>
+    </div>
+    <div class="why-card">
+      <div class="icon">🏛️</div>
+      <h3>Your Brand Person. Your Authority.</h3>
+      <p>You choose the face of your practice — a physician, NP, or brand ambassador. Every video is built around their likeness using a combination of real footage and AI-generated content, creating a consistent brand presence patients trust before they ever call.</p>
+    </div>
+    <div class="why-card">
+      <div class="icon">📈</div>
+      <h3>Compounding Returns</h3>
+      <p>Unlike ads that stop the moment you stop paying, organic video compounds. A video published today continues driving traffic in month 6, month 12, and year 3. The asset appreciates.</p>
+    </div>
+    <div class="why-card accent">
+      <div class="icon">🤖</div>
+      <h3>AI Search Is Coming Fast</h3>
+      <p>ChatGPT, Gemini, and Perplexity are increasingly answering health questions. Our videos are structured for AEO (Answer Engine Optimization) — so your content surfaces in AI responses, not just Google.</p>
+    </div>
+    <div class="why-card wide">
+      <div class="icon" style="background:var(--green-pale); font-size:26px;">⚡</div>
+      <div>
+        <h3>Consistency + Recency + Relevancy = Algorithmic Dominance</h3>
+        <p>YouTube's and Google's algorithms reward three things above all else: consistent publishing, recent content, and topic relevancy. Our three-tier system is engineered specifically around these signals — producing content in batches but releasing it on a schedule that makes your channel appear perpetually active and authoritative.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PLATFORM STRATEGY -->
+<div class="platform-section" id="platform">
+  <div class="platform-inner">
+    <div class="section-label">Dual Platform System</div>
+    <h2>Vimeo + YouTube: One Video, Twice the Impact</h2>
+    <p class="section-intro">Every video is produced once and deployed across two platforms with a deliberate stagger. This is the secret weapon most video marketing agencies completely miss.</p>
+
+    <div class="platform-flow">
+      <div class="flow-step highlight">
+        <div class="flow-badge">Day 1</div>
+        <h3>Vimeo Goes Live</h3>
+        <p>All videos upload to Vimeo immediately and embed on their matching website service pages. Clean, distraction-free — no competitor ads, no "suggested videos" pulling patients away. Patients get answers instantly.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-badge">Weeks 2–8</div>
+        <h3>Staggered YouTube Release</h3>
+        <p>Videos release to YouTube at 2 per week on a consistent schedule — even though the batch was produced upfront. The channel appears active and consistent to the algorithm. Each upload is a new indexing event.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-badge">Ongoing</div>
+        <h3>Embed Swap + Vimeo Stays Live</h3>
+        <p>Once live on YouTube, each website page swaps its embed. Google now sees its own platform's video on a medically relevant page — a powerful local SEO signal. Vimeo remains live as a clean asset for email and paid campaigns forever.</p>
+      </div>
+    </div>
+
+    <div class="platform-why">
+      <div class="badge">💡</div>
+      <p><strong>Why this matters:</strong> Embedding YouTube on a relevant website page tells Google — which owns YouTube — that this page and this video are about the same topic. Combined with keyword-optimized page titles, each swapped embed quietly stacks your local SEO authority over time. The Vimeo library doesn't compete — it complements, serving as a clean, brandable asset wherever distraction-free viewing converts better: paid ads, email campaigns, retargeting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="section-label">Content Architecture</div>
+  <h2>Three Tiers. One Compounding Engine.</h2>
+  <p class="section-intro">Each tier builds on the last. Tier 1 establishes credibility. Tier 2 drives local search leads. Tier 3 is where the channel becomes a self-filling appointment calendar.</p>
+
+  <div class="tiers">
+
+    <!-- TIER 1 -->
+    <div class="tier-card">
+      <div class="tier-header">
+        <div class="tier-name">Tier 1 · Included</div>
+        <div class="tier-title">Foundation</div>
+        <div class="tier-price">Included in Biz-in-a-Box</div>
+        <div class="tier-cadence">12 videos · 60 days · 2 per week</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-goal">"When someone Googles your practice name, something credible shows up. The channel looks legitimate and indexed."</p>
+        <ul class="deliverables">
+          <li>4 core condition videos (knee, back, inflammation, sports)</li>
+          <li>3 FAQ videos (FDA status, allogeneic vs autologous, IV vs joint)</li>
+          <li>2 patient testimonials (joint pain + chronic condition)</li>
+          <li>3 brand & trust videos (About Us, How It Works, Why Stem Cells)</li>
+          <li>Produced as a hybrid of real and AI-generated video using your chosen brand person</li>
+          <li>YouTube stagger begins Week 2</li>
+        </ul>
+        <div class="tier-metrics">
+          <div class="tier-metric">
+            <div class="num">12</div>
+            <div class="lbl">Videos</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">24+</div>
+            <div class="lbl">Shorts</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">60</div>
+            <div class="lbl">Days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier-card featured">
+      <div class="tier-header">
+        <div class="tier-name">Tier 2 · Upsell</div>
+        <div class="tier-title">Momentum</div>
+        <div class="tier-price">$1,500 – $2,500</div>
+        <div class="tier-cadence">12 additional videos · Days 61–120 · Local SEO titles</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-goal">"Picks up where Tier 1 leaves off — 12 more videos released over days 61–120, adding local SEO muscle and deeper condition coverage. Local SEO videos drive the most direct phone calls."</p>
+        <ul class="deliverables">
+          <li>5 deeper condition videos (neuropathy, RA, hip/shoulder, anti-aging, hair loss)</li>
+          <li>3 comparison/trust videos (vs cortisone, athlete banking, patient testimonial)</li>
+          <li>1 FAQ: What to expect at your first visit</li>
+          <li>3 high-converting local SEO videos — "[City] stem cell therapy" by condition</li>
+          <li>Local keyword optimization on all titles and descriptions</li>
+          <li>Continues YouTube stagger for algorithm consistency</li>
+        </ul>
+        <div class="tier-metrics">
+          <div class="tier-metric">
+            <div class="num">12</div>
+            <div class="lbl">New Videos</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">24</div>
+            <div class="lbl">Total Library</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">3</div>
+            <div class="lbl">Local SEO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="tier-card">
+      <div class="tier-header">
+        <div class="tier-name">Tier 3 · Retainer</div>
+        <div class="tier-title">Ongoing Authority</div>
+        <div class="tier-price">$997 – $1,500 / month</div>
+        <div class="tier-cadence">4 videos/month minimum · Indefinite</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-goal">"Compounding growth kicks in around month 3. This is where the channel becomes a real lead-generation asset — and your recurring revenue."</p>
+        <ul class="deliverables">
+          <li>Monthly conditions pool: diabetes complications, COPD, fibromyalgia, lupus, cardiovascular, ED, and more</li>
+          <li>1 fresh patient testimonial every month</li>
+          <li>Seasonal or trending topic each month</li>
+          <li>Latest research update each month</li>
+          <li>Full social distribution included</li>
+          <li>Monthly content calendar provided</li>
+        </ul>
+        <div class="tier-metrics">
+          <div class="tier-metric">
+            <div class="num">4+</div>
+            <div class="lbl">Videos/Mo</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">∞</div>
+            <div class="lbl">Compounding</div>
+          </div>
+          <div class="tier-metric">
+            <div class="num">Mo. 3</div>
+            <div class="lbl">Traction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SHORTS -->
+<div class="shorts-section" id="shorts">
+  <div class="shorts-inner">
+    <div class="section-label">Content Multiplication</div>
+    <h2>Shorts: Every Video Becomes Many</h2>
+
+    <div class="shorts-grid">
+      <div class="shorts-visual">
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">Knee Pain</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">FDA FAQ</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">Anti-Aging</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">Neuropathy</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">Patient Story</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">IV vs Joint</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">Hair Loss</div>
+        </div>
+        <div class="short-card">
+          <div class="play">▶</div>
+          <div class="short-label">First Visit</div>
+        </div>
+      </div>
+
+      <div class="shorts-copy">
+        <h3>Short-Form Assets Cut From Every Video</h3>
+        <p>Every long-form video is sliced into Shorts and Reels — the number varies by content, but every video yields multiple short-form assets deployed across YouTube Shorts, Instagram, TikTok, and Facebook.</p>
+        <p>Short-form is your top-of-funnel awareness engine in your local market. Patients who discover you via a 45-second clip on Instagram frequently become your highest-intent callers — nudged multiple times before they ever pick up the phone.</p>
+        <div class="shorts-tags">
+          <span class="tag">YouTube Shorts</span>
+          <span class="tag">Instagram Reels</span>
+          <span class="tag">TikTok</span>
+          <span class="tag">Facebook</span>
+          <span class="tag">AI-Sliced Automatically</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="closer" id="close">
+  <div class="closer-inner">
+    <div class="section-label" style="justify-content:center; margin-bottom:20px;">Your Practice. Your Asset.</div>
+    <h2>A Video Library That Works Harder Every Month</h2>
+    <p>Most marketing you do this year will be forgotten by next year. This video system is different — every video published becomes a permanent asset that compounds in authority, search visibility, and patient trust over time.</p>
+    <p>Tier 1 gets you established and credible. Tier 2 makes your phone ring locally. Tier 3 turns your channel into a self-sustaining patient acquisition engine — running in the background while you focus 100% on clinical care.</p>
+    <a href="#tiers" class="cta-btn">Review the Tiers</a>
+  </div>
+</div>
+
+</body>
+</html>
