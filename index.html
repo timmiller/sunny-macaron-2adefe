@@ -436,7 +436,7 @@
   }
 
   .tier-card.featured::before {
-    content: 'MOST POPULAR';
+    content: 'INCLUDED';
     position: absolute;
     top: 0; left: 0; right: 0;
     background: var(--copper);
@@ -446,6 +446,7 @@
     letter-spacing: 0.15em;
     color: var(--dark);
     padding: 6px;
+    border-radius: 16px 16px 0 0;
   }
 
   .tier-header {
@@ -782,13 +783,13 @@
     <p class="hero-sub fade-up">A structured three-tier content engine combining real and AI-generated video — using your chosen brand person's likeness — distributed across platforms to build compounding organic authority for your practice.</p>
     <div class="hero-stats fade-up">
       <div class="stat">
-        <span class="stat-num">24</span>
-        <span class="stat-label">Foundation Videos</span>
+        <span class="stat-num">8</span>
+        <span class="stat-label">Starter Videos</span>
       </div>
       <div class="hero-divider"></div>
       <div class="stat">
-        <span class="stat-num">Shorts</span>
-        <span class="stat-label">Cut From Every Video</span>
+        <span class="stat-num">8 wks</span>
+        <span class="stat-label">To Launch</span>
       </div>
       <div class="hero-divider"></div>
       <div class="stat">
@@ -797,8 +798,8 @@
       </div>
       <div class="hero-divider"></div>
       <div class="stat">
-        <span class="stat-num">+4/mo</span>
-        <span class="stat-label">Retainer Cadence</span>
+        <span class="stat-num">$597</span>
+        <span class="stat-label">Ongoing / Month</span>
       </div>
     </div>
   </div>
@@ -1016,8 +1017,8 @@
 <!-- TIERS -->
 <section id="tiers">
   <div class="section-label">Content Architecture</div>
-  <h2>Three Tiers. One Compounding Engine.</h2>
-  <p class="section-intro">Each tier builds on the last. Tier 1 establishes credibility. Tier 2 drives local search leads. Tier 3 is where the channel becomes a self-filling appointment calendar.</p>
+  <h2>Two Tiers. One Compounding Engine.</h2>
+  <p class="section-intro">Tier 1 launches your channel with a proven foundation of 8 high-impact videos. Tier 2 keeps the algorithm fed and your authority growing — one new video every week, indefinitely.</p>
 
   <style>
     .video-col { flex: 1; min-width: 0; }
@@ -1046,111 +1047,71 @@
     .dtag-both { background: rgba(120,100,200,0.2); color: #a090e0; }
     .three-col { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
     .video-col { flex: 1; min-width: 120px; }
-    .tier3-pool { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 7px; margin-top: 12px; }
+    .pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 7px; margin-top: 12px; }
     .pool-item {
       background: var(--dark3); border-radius: 7px; padding: 7px 9px;
       font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;
     }
     .pool-item .dtag { margin-top: 0; }
+    .week-badge {
+      flex-shrink: 0; font-size: 9px; font-weight: 700;
+      padding: 2px 6px; border-radius: 4px; margin-top: 1px;
+      background: rgba(255,255,255,0.06); color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
   </style>
 
-  <div class="tiers">
+  <div class="tiers" style="grid-template-columns: repeat(2, minmax(0,1fr));">
 
     <!-- TIER 1 -->
-    <div class="tier-card">
+    <div class="tier-card featured">
       <div class="tier-header">
         <div class="tier-name">Tier 1 · Included</div>
         <div class="tier-title">Foundation</div>
         <div class="tier-price">Included in Biz-in-a-Box</div>
-        <div class="tier-cadence">12 videos · Days 1–60 · 2 per week</div>
+        <div class="tier-cadence">8 videos · 1 per week · 8 weeks</div>
       </div>
       <div class="tier-body">
-        <p class="tier-goal">"When someone Googles your practice name, something credible shows up. The channel looks legitimate and indexed."</p>
-        <div class="three-col">
-          <div class="video-col">
-            <div class="video-col-header col-conditions">Conditions</div>
-            <div class="video-item"><span class="dtag dtag-both">Both</span>Knee osteoarthritis — avoid surgery</div>
-            <div class="video-item"><span class="dtag dtag-iv">IV</span>Chronic back & spine pain</div>
-            <div class="video-item"><span class="dtag dtag-iv">IV</span>Chronic inflammation & autoimmune</div>
-            <div class="video-item"><span class="dtag dtag-both">Both</span>Sports injuries & recovery</div>
-          </div>
-          <div class="video-col">
-            <div class="video-col-header col-education">Education / FAQ</div>
-            <div class="video-item">Is stem cell therapy FDA approved?</div>
-            <div class="video-item">Allogeneic vs autologous — what's the difference?</div>
-            <div class="video-item">IV vs joint injection — which is right?</div>
-            <div class="video-item">How stem cell therapy works</div>
-            <div class="video-item">Why stem cells — not surgery or pills</div>
-          </div>
-          <div class="video-col">
-            <div class="video-col-header col-testimonials">Testimonials & Brand</div>
-            <div class="video-item">Patient testimonial — joint pain</div>
-            <div class="video-item">Patient testimonial — chronic condition</div>
-            <div class="video-item">About us — who we are</div>
-          </div>
+        <p class="tier-goal">"When someone Googles your practice name, something credible shows up. The channel looks legitimate, indexed, and authoritative from day one."</p>
+
+        <div style="display:flex; flex-direction:column; gap:0;">
+          <div class="video-col-header col-conditions" style="margin-bottom:10px;">8 Starter Videos — In Order</div>
+          <div class="video-item"><span class="week-badge">Wk 1</span><span class="dtag dtag-both">Both</span>Knee osteoarthritis — avoid surgery</div>
+          <div class="video-item"><span class="week-badge">Wk 2</span><span class="dtag dtag-education" style="background:rgba(74,158,122,0.2);color:#6fcca8;">FAQ</span>Is stem cell therapy FDA approved?</div>
+          <div class="video-item"><span class="week-badge">Wk 3</span><span class="dtag dtag-iv">IV</span>Chronic back & spine pain</div>
+          <div class="video-item"><span class="week-badge">Wk 4</span><span class="dtag dtag-education" style="background:rgba(74,158,122,0.2);color:#6fcca8;">EDU</span>How stem cell therapy works</div>
+          <div class="video-item"><span class="week-badge">Wk 5</span><span class="dtag dtag-education" style="background:rgba(74,158,122,0.2);color:#6fcca8;">FAQ</span>IV vs joint injection — which is right?</div>
+          <div class="video-item"><span class="week-badge">Wk 6</span><span class="dtag dtag-both">Both</span>Sports injuries & recovery</div>
+          <div class="video-item"><span class="week-badge">Wk 7</span><span class="dtag dtag-both" style="background:rgba(120,100,200,0.2);color:#a090e0;">Story</span>Patient testimonial — joint pain</div>
+          <div class="video-item"><span class="week-badge">Wk 8</span><span class="dtag dtag-education" style="background:rgba(74,158,122,0.2);color:#6fcca8;">EDU</span>Why stem cells — not surgery or pills</div>
         </div>
+
         <div class="tier-metrics" style="margin-top:18px;">
-          <div class="tier-metric"><div class="num">12</div><div class="lbl">Videos</div></div>
-          <div class="tier-metric"><div class="num">4</div><div class="lbl">Conditions</div></div>
-          <div class="tier-metric"><div class="num">60</div><div class="lbl">Days</div></div>
+          <div class="tier-metric"><div class="num">8</div><div class="lbl">Videos</div></div>
+          <div class="tier-metric"><div class="num">8</div><div class="lbl">Weeks</div></div>
+          <div class="tier-metric"><div class="num">3</div><div class="lbl">Categories</div></div>
         </div>
       </div>
     </div>
 
     <!-- TIER 2 -->
-    <div class="tier-card featured">
-      <div class="tier-header">
-        <div class="tier-name">Tier 2 · Upsell</div>
-        <div class="tier-title">Momentum</div>
-        <div class="tier-price">$1,500 – $2,500</div>
-        <div class="tier-cadence">12 additional videos · Days 61–120 · Local SEO titles added</div>
-      </div>
-      <div class="tier-body">
-        <p class="tier-goal">"Deeper conditions, comparison content, and the three local SEO videos that drive the most direct phone calls."</p>
-        <div class="three-col">
-          <div class="video-col">
-            <div class="video-col-header col-conditions">Conditions</div>
-            <div class="video-item"><span class="dtag dtag-iv">IV</span>Neuropathy & nerve pain</div>
-            <div class="video-item"><span class="dtag dtag-both">Both</span>Rheumatoid arthritis</div>
-            <div class="video-item"><span class="dtag dtag-both">Both</span>Hip & shoulder joint pain</div>
-            <div class="video-item"><span class="dtag dtag-iv">IV</span>Anti-aging & energy restoration</div>
-            <div class="video-item"><span class="dtag dtag-iv">IV</span>Hair loss & regrowth</div>
-          </div>
-          <div class="video-col">
-            <div class="video-col-header col-education">Comparison / FAQ</div>
-            <div class="video-item">Stem cells vs cortisone shots</div>
-            <div class="video-item">Why athletes bank stem cells early</div>
-            <div class="video-item">What to expect at your first visit</div>
-            <div class="video-col-header col-testimonials" style="margin-top:12px;">Testimonial</div>
-            <div class="video-item">Patient testimonial — anti-aging</div>
-          </div>
-          <div class="video-col">
-            <div class="video-col-header col-local">Local SEO</div>
-            <div class="video-item">Stem cell therapy in [City] — knee pain</div>
-            <div class="video-item">Stem cell therapy in [City] — back pain</div>
-            <div class="video-item">Stem cell therapy in [City] — anti-aging</div>
-          </div>
-        </div>
-        <div class="tier-metrics" style="margin-top:18px;">
-          <div class="tier-metric"><div class="num">12</div><div class="lbl">New Videos</div></div>
-          <div class="tier-metric"><div class="num">24</div><div class="lbl">Total Library</div></div>
-          <div class="tier-metric"><div class="num">3</div><div class="lbl">Local SEO</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TIER 3 -->
     <div class="tier-card">
       <div class="tier-header">
-        <div class="tier-name">Tier 3 · Retainer</div>
+        <div class="tier-name">Tier 2 · Ongoing</div>
         <div class="tier-title">Ongoing Authority</div>
-        <div class="tier-price">$997 – $1,500 / month</div>
-        <div class="tier-cadence">4 videos/month minimum · Indefinite</div>
+        <div class="tier-price">$597 / month</div>
+        <div class="tier-cadence">1 video per week · Indefinite · Compounding growth</div>
       </div>
       <div class="tier-body">
-        <p class="tier-goal">"Compounding growth kicks in around month 3. This is where the channel becomes a permanent patient acquisition engine."</p>
-        <div class="video-col-header col-conditions">Monthly Conditions Pool</div>
-        <div class="tier3-pool">
+        <p class="tier-goal">"Consistent publishing feeds the algorithm. Compounding growth kicks in around month 3 — this is where the channel becomes a permanent patient acquisition engine."</p>
+
+        <div class="video-col-header col-conditions" style="margin-bottom:8px;">Conditions Pool</div>
+        <div class="pool-grid">
+          <div class="pool-item"><span class="dtag dtag-iv">IV</span>Neuropathy & nerve pain</div>
+          <div class="pool-item"><span class="dtag dtag-both">Both</span>Rheumatoid arthritis</div>
+          <div class="pool-item"><span class="dtag dtag-both">Both</span>Hip & shoulder pain</div>
+          <div class="pool-item"><span class="dtag dtag-iv">IV</span>Anti-aging & energy</div>
+          <div class="pool-item"><span class="dtag dtag-iv">IV</span>Hair loss & regrowth</div>
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>Diabetes type 2</div>
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>COPD & lung inflammation</div>
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>Fibromyalgia</div>
@@ -1163,15 +1124,34 @@
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>Migraine & headaches</div>
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>Crohn's & gut inflammation</div>
           <div class="pool-item"><span class="dtag dtag-iv">IV</span>Anti-aging at 40+</div>
+          <div class="pool-item"><span class="dtag dtag-iv">IV</span>Chronic inflammation</div>
         </div>
+
+        <div class="video-col-header col-education" style="margin-top:14px; margin-bottom:8px;">Also Included Monthly</div>
+        <div class="pool-grid">
+          <div class="pool-item">Stem cells vs cortisone shots</div>
+          <div class="pool-item">Why athletes bank stem cells</div>
+          <div class="pool-item">What to expect — first visit</div>
+          <div class="pool-item">Patient testimonial — anti-aging</div>
+          <div class="pool-item">Allogeneic vs autologous</div>
+        </div>
+
+        <div class="video-col-header col-local" style="margin-top:14px; margin-bottom:8px;">Local SEO Videos</div>
+        <div class="pool-grid">
+          <div class="pool-item">[City] — knee pain</div>
+          <div class="pool-item">[City] — back pain</div>
+          <div class="pool-item">[City] — anti-aging</div>
+        </div>
+
         <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
-          <div class="video-col-header col-testimonials">+ 1 Fresh Testimonial / mo</div>
+          <div class="video-col-header col-testimonials">+ Fresh Testimonial / mo</div>
           <div class="video-col-header col-education">+ Seasonal Topic / mo</div>
           <div class="video-col-header col-local">+ Research Update / mo</div>
         </div>
+
         <div class="tier-metrics" style="margin-top:16px;">
           <div class="tier-metric"><div class="num">4+</div><div class="lbl">Videos/Mo</div></div>
-          <div class="tier-metric"><div class="num">12</div><div class="lbl">Conditions</div></div>
+          <div class="tier-metric"><div class="num">26+</div><div class="lbl">Topics in Pool</div></div>
           <div class="tier-metric"><div class="num">Mo. 3</div><div class="lbl">Traction</div></div>
         </div>
       </div>
@@ -1361,7 +1341,7 @@
     <div class="section-label" style="justify-content:center; margin-bottom:20px;">Your Practice. Your Asset.</div>
     <h2>A Video Library That Works Harder Every Month</h2>
     <p>Most marketing you do this year will be forgotten by next year. This video system is different — every video published becomes a permanent asset that compounds in authority, search visibility, and patient trust over time.</p>
-    <p>Tier 1 gets you established and credible. Tier 2 makes your phone ring locally. Tier 3 turns your channel into a self-sustaining patient acquisition engine — running in the background while you focus 100% on clinical care.</p>
+    <p>Tier 1 gets you live in 8 weeks with a credible, indexed channel. Tier 2 at $597/month keeps the algorithm fed and your practice growing — one new video every week, indefinitely.</p>
     <a href="#tiers" class="cta-btn">Review the Tiers</a>
   </div>
 </div>
