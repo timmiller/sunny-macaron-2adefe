@@ -359,6 +359,29 @@
   .empty-state h3 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--ink-2); }
   .empty-state p { font-size: 13px; }
 
+  /* ── ADD PROVIDER BUTTON ── */
+  .add-provider-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--blue);
+    background: transparent;
+    border: 1px dashed var(--blue-mid);
+    border-radius: var(--radius);
+    padding: 5px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s;
+  }
+  .add-provider-btn:hover { background: var(--blue-bg); }
+
+  /* ── PROVIDER FORM ── */
+  .provider-form { display: flex; flex-direction: column; gap: 12px; }
+  .provider-form-row { display: flex; flex-direction: column; gap: 4px; }
+  .provider-form-row label { font-size: 11px; font-weight: 500; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .provider-form-row input { width: 100%; }
+  .provider-form-hint { font-size: 11px; color: var(--ink-3); margin-top: -4px; }
+
   /* ── MODAL ── */
   .modal-overlay {
     position: fixed;
@@ -445,6 +468,7 @@
     <select id="provider-select">
       <option value="">— Select provider —</option>
     </select>
+    <button class="add-provider-btn" onclick="showAddProvider()">+ Add provider</button>
   </div>
   <div class="pb-divider"></div>
   <div class="pb-group">
@@ -489,18 +513,13 @@
 
 <script>
 // ─────────────────────────────────────────────
-// CONFIG — Joe: replace with your Worker URL
+// CONFIG
 // ─────────────────────────────────────────────
 const API_URL = 'https://rr-checklist-api.visual-edge.workers.dev/checklist';
+const PROVIDERS_URL = 'https://rr-checklist-api.visual-edge.workers.dev/providers';
 
-// ─────────────────────────────────────────────
-// PROVIDERS — add new providers here
-// { id, label } — id must be unique, lowercase, no spaces
-// ─────────────────────────────────────────────
-const PROVIDERS = [
-  { id: 'rr-001-berge-dallas',   label: 'RR-001 · Berge — Dallas' },
-  // { id: 'rr-002-smith-houston', label: 'RR-002 · Smith — Houston' },
-];
+// providers loaded dynamically from KV — seeded with first provider
+let PROVIDERS = [];
 
 // ─────────────────────────────────────────────
 // CHECKLIST DATA
@@ -1052,9 +1071,14 @@ async function confirmAction() {
 // ─────────────────────────────────────────────
 // MODAL
 // ─────────────────────────────────────────────
-function showModal(title, body, buttons) {
+function showModal(title, body, buttons, formHTML) {
   document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').textContent = body;
+  const bodyEl = document.getElementById('modal-body');
+  if (formHTML) {
+    bodyEl.innerHTML = formHTML;
+  } else {
+    bodyEl.textContent = body;
+  }
   const acts = document.getElementById('modal-actions');
   acts.innerHTML = '';
   buttons.forEach(b => {
@@ -1091,8 +1115,44 @@ function showToast(msg) {
 // ─────────────────────────────────────────────
 // PROVIDER SELECT + INITIALS
 // ─────────────────────────────────────────────
-function populateProviders() {
+async function loadProviders() {
+  try {
+    const r = await fetch(PROVIDERS_URL);
+    if (r.ok) {
+      const json = await r.json();
+      PROVIDERS = json.providers || [];
+    }
+  } catch(e) {
+    // fallback: try localStorage
+    try {
+      const raw = localStorage.getItem('rr_providers');
+      if (raw) PROVIDERS = JSON.parse(raw);
+    } catch(e2) {}
+  }
+  // seed first provider if KV is empty
+  if (PROVIDERS.length === 0) {
+    PROVIDERS = [{ id: 'rr-001-berge-dallas', label: 'RR-001 · Berge — Dallas' }];
+    await saveProviders();
+  }
+}
+
+async function saveProviders() {
+  try {
+    await fetch(PROVIDERS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ providers: PROVIDERS }),
+    });
+    localStorage.setItem('rr_providers', JSON.stringify(PROVIDERS));
+  } catch(e) {
+    localStorage.setItem('rr_providers', JSON.stringify(PROVIDERS));
+  }
+}
+
+function populateProviderSelect() {
   const sel = document.getElementById('provider-select');
+  // clear existing options except first placeholder
+  while (sel.options.length > 1) sel.remove(1);
   PROVIDERS.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
@@ -1101,7 +1161,10 @@ function populateProviders() {
   });
   // restore last used
   const saved = localStorage.getItem('rr_last_provider');
-  if (saved) { sel.value = saved; handleProviderChange(saved); }
+  if (saved && PROVIDERS.find(p => p.id === saved)) {
+    sel.value = saved;
+    handleProviderChange(saved);
+  }
 }
 
 document.getElementById('provider-select').addEventListener('change', function() {
@@ -1127,17 +1190,77 @@ document.getElementById('initials-input').addEventListener('input', function() {
 });
 
 // ─────────────────────────────────────────────
+// ADD PROVIDER
+// ─────────────────────────────────────────────
+function showAddProvider() {
+  showModal(
+    'Add new provider',
+    '',
+    [
+      { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
+      { label: 'Add provider', cls: 'btn-green', action: submitNewProvider },
+    ],
+    `<div class="provider-form">
+      <div class="provider-form-row">
+        <label>RR Number</label>
+        <input type="text" id="new-rr-num" placeholder="e.g. 002" maxlength="6" />
+        <span class="provider-form-hint">Next available number</span>
+      </div>
+      <div class="provider-form-row">
+        <label>Last name</label>
+        <input type="text" id="new-last-name" placeholder="e.g. Smith" />
+      </div>
+      <div class="provider-form-row">
+        <label>City</label>
+        <input type="text" id="new-city" placeholder="e.g. Houston" />
+      </div>
+    </div>`
+  );
+  // suggest next RR number
+  const nums = PROVIDERS.map(p => parseInt(p.id.replace('rr-','').split('-')[0]) || 0);
+  const next = (Math.max(0, ...nums) + 1).toString().padStart(3, '0');
+  setTimeout(() => { const el = document.getElementById('new-rr-num'); if(el) el.value = next; }, 50);
+}
+
+async function submitNewProvider() {
+  const num  = document.getElementById('new-rr-num')?.value.trim().padStart(3,'0');
+  const last = document.getElementById('new-last-name')?.value.trim();
+  const city = document.getElementById('new-city')?.value.trim();
+
+  if (!num || !last || !city) { showToast('Fill in all three fields'); return; }
+
+  const id    = `rr-${num}-${last.toLowerCase().replace(/\s+/g,'-')}-${city.toLowerCase().replace(/\s+/g,'-')}`;
+  const label = `RR-${num} · ${last} — ${city}`;
+
+  if (PROVIDERS.find(p => p.id === id)) { showToast('Provider already exists'); return; }
+
+  PROVIDERS.push({ id, label });
+  PROVIDERS.sort((a, b) => a.id.localeCompare(b.id));
+  await saveProviders();
+  populateProviderSelect();
+  closeModal();
+  // auto-select the new provider
+  const sel = document.getElementById('provider-select');
+  sel.value = id;
+  handleProviderChange(id);
+  showToast(`${label} added`);
+}
+
+// ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
-(function init() {
+async function init() {
   const savedInitials = localStorage.getItem('rr_initials');
   if (savedInitials) {
     currentInitials = savedInitials;
     document.getElementById('initials-input').value = savedInitials;
     document.getElementById('initials-avatar').textContent = savedInitials;
   }
-  populateProviders();
-})();
+  await loadProviders();
+  populateProviderSelect();
+}
+
+init();
 </script>
 </body>
 </html>
