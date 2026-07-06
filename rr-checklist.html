@@ -377,6 +377,22 @@
     transition: background 0.12s;
   }
   .add-provider-btn:hover { background: var(--blue-bg); }
+  .edit-provider-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 5px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s;
+    display: none;
+  }
+  .edit-provider-btn:hover { background: var(--surface-2); color: var(--ink); }
+  .edit-provider-btn.visible { display: inline-flex; align-items: center; gap: 4px; }
 
   /* ── PROVIDER FORM ── */
   .provider-form { display: flex; flex-direction: column; gap: 12px; }
@@ -472,6 +488,7 @@
       <option value="">— Select provider —</option>
     </select>
     <button class="add-provider-btn" onclick="showAddProvider()">+ Add provider</button>
+    <button class="edit-provider-btn" id="edit-provider-btn" onclick="showEditProvider()">✏ Edit</button>
   </div>
   <div class="pb-divider"></div>
   <div class="pb-group">
@@ -1136,7 +1153,7 @@ async function loadProviders() {
   }
   // seed first provider if KV is empty
   if (PROVIDERS.length === 0) {
-    PROVIDERS = [{ id: 'rr-001-berge-dallas', label: 'RR-001 · Berge — Dallas' }];
+    PROVIDERS = [{ id: 'rr-001-dubov-cali-ny-nj', label: 'RR-001 · Dubov/Cali — NY/NJ' }];
     await saveProviders();
   }
 }
@@ -1179,6 +1196,8 @@ document.getElementById('provider-select').addEventListener('change', function()
 async function handleProviderChange(id) {
   currentProvider = id;
   checkData = {};
+  const editBtn = document.getElementById('edit-provider-btn');
+  if (editBtn) editBtn.classList.toggle('visible', !!id);
   if (id) {
     localStorage.setItem('rr_last_provider', id);
     await loadFromAPI(id);
@@ -1227,14 +1246,91 @@ function showAddProvider() {
   setTimeout(() => { const el = document.getElementById('new-rr-num'); if(el) el.value = next; }, 50);
 }
 
-async function submitNewProvider() {
+function showEditProvider() {
+  const provider = PROVIDERS.find(p => p.id === currentProvider);
+  if (!provider) return;
+  // parse existing label: "RR-001 · Dubov/Cali — NY/NJ"
+  const numMatch = provider.label.match(/RR-(\d+)/);
+  const midMatch = provider.label.match(/· (.+) — (.+)$/);
+  const currentNum  = numMatch ? numMatch[1] : '';
+  const currentLast = midMatch ? midMatch[1] : '';
+  const currentCity = midMatch ? midMatch[2] : '';
+
+  showModal(
+    'Edit provider',
+    '',
+    [
+      { label: 'Cancel',  cls: 'btn-ghost', action: closeModal },
+      { label: 'Delete',  cls: 'btn-red',   action: deleteProvider },
+      { label: 'Save',    cls: 'btn-green',  action: saveEditProvider },
+    ],
+    `<div class="provider-form">
+      <div class="provider-form-row">
+        <label>RR Number</label>
+        <input type="text" id="edit-rr-num" value="${currentNum}" maxlength="6" />
+      </div>
+      <div class="provider-form-row">
+        <label>Last name / names</label>
+        <input type="text" id="edit-last-name" value="${currentLast}" />
+      </div>
+      <div class="provider-form-row">
+        <label>City / region</label>
+        <input type="text" id="edit-city" value="${currentCity}" />
+        <span class="provider-form-hint">Slashes OK — e.g. NY/NJ or Dallas/Fort Worth</span>
+      </div>
+    </div>`
+  );
+}
+
+async function saveEditProvider() {
+  const num  = document.getElementById('edit-rr-num')?.value.trim().padStart(3,'0');
+  const last = document.getElementById('edit-last-name')?.value.trim();
+  const city = document.getElementById('edit-city')?.value.trim();
+  if (!num || !last || !city) { showToast('Fill in all three fields'); return; }
+
+  const newLabel = `RR-${num} · ${last} — ${city}`;
+  const idx = PROVIDERS.findIndex(p => p.id === currentProvider);
+  if (idx === -1) return;
+
+  // update label only — keep same ID so checklist data is preserved
+  PROVIDERS[idx] = { id: currentProvider, label: newLabel };
+  await saveProviders();
+  populateProviderSelect();
+  // re-select the same provider
+  document.getElementById('provider-select').value = currentProvider;
+  closeModal();
+  showToast(`Renamed to ${newLabel}`);
+}
+
+async function deleteProvider() {
+  const provider = PROVIDERS.find(p => p.id === currentProvider);
+  if (!confirm(`Delete "${provider?.label}"? This cannot be undone and will remove all checklist data for this provider.`)) return;
+  PROVIDERS = PROVIDERS.filter(p => p.id !== currentProvider);
+  await saveProviders();
+  // also clear checklist data from KV
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider: currentProvider, data: {} }),
+    });
+  } catch(e) {}
+  currentProvider = '';
+  checkData = {};
+  closeModal();
+  populateProviderSelect();
+  document.getElementById('provider-select').value = '';
+  document.getElementById('edit-provider-btn')?.classList.remove('visible');
+  buildChecklist();
+  showToast('Provider deleted');
+}
   const num  = document.getElementById('new-rr-num')?.value.trim().padStart(3,'0');
   const last = document.getElementById('new-last-name')?.value.trim();
   const city = document.getElementById('new-city')?.value.trim();
 
   if (!num || !last || !city) { showToast('Fill in all three fields'); return; }
 
-  const id    = `rr-${num}-${last.toLowerCase().replace(/\s+/g,'-')}-${city.toLowerCase().replace(/\s+/g,'-')}`;
+  const id    = `rr-${num}-${last.toLowerCase().replace(/[\s\/]+/g,'-')}-${city.toLowerCase().replace(/[\s\/]+/g,'-')}`;
   const label = `RR-${num} · ${last} — ${city}`;
 
   if (PROVIDERS.find(p => p.id === id)) { showToast('Provider already exists'); return; }
