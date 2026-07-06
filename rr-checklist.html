@@ -260,6 +260,8 @@
   .stage-mini-bar.gray-phase  { background: var(--border-strong); }
 
   .stage-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-3); white-space: nowrap; flex-shrink: 0; }
+  .stage-map-link { font-size: 11px; color: var(--blue); text-decoration: none; white-space: nowrap; flex-shrink: 0; opacity: 0.7; transition: opacity 0.15s; }
+  .stage-map-link:hover { opacity: 1; text-decoration: underline; }
   .stage-chevron { color: var(--ink-3); font-size: 13px; transition: transform 0.2s; flex-shrink: 0; }
   .stage-chevron.open { transform: rotate(180deg); }
 
@@ -517,6 +519,7 @@
 // ─────────────────────────────────────────────
 const API_URL = 'https://rr-checklist-api.visual-edge.workers.dev/checklist';
 const PROVIDERS_URL = 'https://rr-checklist-api.visual-edge.workers.dev/providers';
+const JOURNEY_MAP_URL = 'https://stem-cell-video.visual-edge.workers.dev/journey-map.html';
 
 // providers loaded dynamically from KV — seeded with first provider
 let PROVIDERS = [];
@@ -938,6 +941,7 @@ function buildStageHTML(stage) {
       </div>
     </div>
     <div class="stage-count">${done}/${total}</div>
+    <a class="stage-map-link" href="${JOURNEY_MAP_URL}#stage-${stage.id}" target="_blank" onclick="event.stopPropagation()">map ↗</a>
     <div class="stage-chevron" id="chev-${stage.id}">▾</div>
   </div>
   <div class="stage-body" id="body-${stage.id}">
