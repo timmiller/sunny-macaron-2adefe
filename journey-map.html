@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///C:/Users/User/Downloads/journey-map.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provider Journey Map — Biz in a Box | Regenerative Revival</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    background: #f0f4fa;
+    color: #1a2030;
+  }
+
+  /* COVER */
+  .cover {
+    background: #1A1F30;
+    color: white;
+    padding: 52px 64px 44px;
+  }
+  .cover-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #71A7F5;
+    margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    padding-right: 32px;
+    margin-right: 32px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 8px;
+  }
+  .meta-item:last-child { border-right: none; }
+  .meta-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #71A7F5; display: block; margin-bottom: 3px; }
+  .meta-value { font-size: 13px; color: rgba(255,255,255,0.85); }
+
+  /* MAP CONTAINER */
+  .map-wrap {
+    background: white;
+    margin: 3px 0;
+    padding: 40px 48px;
+  }
+
+  /* PHASE DIVIDER */
+  .phase-divider {
+    background: #1A1F30;
+    color: #71A7F5;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border-radius: 4px;
+    margin: 32px 0 20px;
+  }
+  .phase-divider span {
+    color: rgba(255,255,255,0.5);
+    margin-left: 8px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: none;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-bottom: 32px;
+    padding: 16px 20px;
+    background: #EAEFF7;
+    border-radius: 6px;
+    align-items: center;
+  }
+  .legend-label { font-size: 11px; font-weight: 600; color: #4a5568; margin-right: 4px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .badge-provider  { background: #E6F1FB; color: #0C447C; border: 1px solid #185FA5; }
+  .badge-acct      { background: #EAF3DE; color: #27500A; border: 1px solid #3B6D11; }
+  .badge-sales     { background: #FAEEDA; color: #633806; border: 1px solid #854F0B; }
+  .badge-np        { background: #E1F5EE; color: #085041; border: 1px solid #0F6E56; }
+  .badge-support   { background: #F3F0FB; color: #3C3489; border: 1px solid #534AB7; }
+  .badge-rr        { background: #FBEAF0; color: #72243E; border: 1px solid #993556; }
+  .badge-auto      { background: #EEEDFE; color: #3C3489; border: 1px solid #534AB7; }
+  .badge-gsc       { background: #345691; color: white; }
+  .badge-hub       { background: #854F0B; color: white; }
+  .legend-divider { width: 1px; height: 20px; background: #d0dced; }
+
+  /* STAGE HEADER */
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0 16px;
+    padding: 10px 18px;
+    border-radius: 6px;
+  }
+  .stage-header.blue  { background: #345691; }
+  .stage-header.gray  { background: #444441; }
+  .stage-header.green { background: #27500A; }
+  .stage-header.gold  { background: #7a4f10; }
+  .stage-num {
+    font-family: 'EB Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    min-width: 32px;
+  }
+  .stage-title-wrap { display: flex; flex-direction: column; }
+  .stage-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.03em;
+  }
+  .stage-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+
+  /* ROW */
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 130px 110px;
+    gap: 0;
+    border: 1px solid #d0dced;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .row-main { padding: 14px 18px; }
+  .row-main h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1a2030;
+    margin-bottom: 4px;
+  }
+  .row-main p {
+    font-size: 12.5px;
+    color: #4a5568;
+    line-height: 1.5;
+  }
+  .row-owner {
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    border-left: 1px solid #d0dced;
+    background: #f8fafd;
+  }
+  .row-ai {
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    border-left: 1px solid #d0dced;
+    background: #f8f7ff;
+  }
+  .col-header {
+    display: grid;
+    grid-template-columns: 1fr 130px 110px;
+    gap: 0;
+    margin-bottom: 6px;
+  }
+  .col-header span {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a9ab5;
+    padding: 0 18px;
+  }
+  .col-header span:nth-child(2), .col-header span:nth-child(3) { padding: 0 10px; }
+
+  /* ROW VARIANTS */
+  .row.provider-row  { border-left: 4px solid #185FA5; }
+  .row.acct-row      { border-left: 4px solid #3B6D11; }
+  .row.sales-row     { border-left: 4px solid #854F0B; }
+  .row.np-row        { border-left: 4px solid #0F6E56; }
+  .row.support-row   { border-left: 4px solid #534AB7; }
+  .row.rr-row        { border-left: 4px solid #993556; }
+  .row.auto-row      { border-left: 4px solid #534AB7; background: #f8f7ff; }
+  .row.auto-row .row-main h4 { color: #3C3489; }
+  .row.warning-row   { border-left: 4px solid #f59e0b; background: #fffbeb; }
+  .row.warning-row .row-main h4 { color: #92400e; }
+  .row.gate-row      { border-left: 4px solid #345691; background: #eef3fc; }
+  .row.gate-row .row-main h4 { color: #1e3a6e; }
+
+  /* DECISION GATE */
+  .decision {
+    background: #FAEEDA;
+    border: 1px solid #854F0B;
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin: 12px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .decision-icon { font-size: 18px; flex-shrink: 0; }
+  .decision h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #92400e; margin-bottom: 6px; }
+  .decision p  { font-size: 13px; color: #633806; line-height: 1.5; }
+
+  /* SPLIT PATHS */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .split-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .split-box {
+    padding: 14px 16px;
+    border-radius: 6px;
+    border: 1px solid #d0dced;
+  }
+  .split-box.yes   { border-color: #3B6D11; background: #EAF3DE; }
+  .split-box.no    { border-color: #B4B2A9; background: #F1EFE8; }
+  .split-box.flag  { border-color: #E24B4A; background: #fdf2f1; }
+  .split-box.blue  { border-color: #185FA5; background: #E6F1FB; }
+  .split-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .split-box.yes  .split-label { color: #27500A; }
+  .split-box.no   .split-label { color: #5F5E5A; }
+  .split-box.flag .split-label { color: #A32D2D; }
+  .split-box.blue .split-label { color: #0C447C; }
+  .split-box h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .split-box.yes  h4 { color: #27500A; }
+  .split-box.no   h4 { color: #444441; }
+  .split-box.flag h4 { color: #A32D2D; }
+  .split-box.blue h4 { color: #0C447C; }
+  .split-box p { font-size: 12px; line-height: 1.5; color: #4a5568; }
+
+  /* CONNECTOR */
+  .connector {
+    text-align: center;
+    color: #71A7F5;
+    font-size: 20px;
+    line-height: 1;
+    margin: 6px 0;
+  }
+
+  /* STATUS BADGE */
+  .status-bar {
+    background: #EAEFF7;
+    border: 1px solid #C5DBF7;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    color: #345691;
+    font-weight: 500;
+    margin: 8px 0;
+    text-align: center;
+  }
+  .status-bar.green {
+    background: #EAF3DE;
+    border-color: #3B6D11;
+    color: #27500A;
+  }
+  .status-bar.gold {
+    background: #FAEEDA;
+    border-color: #854F0B;
+    color: #633806;
+  }
+
+  /* COMPLIANCE BOX */
+  .compliance-box {
+    background: #fdf2f1;
+    border: 1px solid #E24B4A;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .compliance-box h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #A32D2D; margin-bottom: 10px; }
+  .compliance-box ul { list-style: none; padding: 0; }
+  .compliance-box li { font-size: 12.5px; color: #633806; margin-bottom: 6px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .compliance-box li::before { content: '✕'; color: #E24B4A; font-size: 13px; flex-shrink: 0; font-weight: 700; }
+
+  /* OPEN ITEMS */
+  .open-items {
+    background: #fffbeb;
+    border: 1px dashed #f59e0b;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-top: 24px;
+  }
+  .open-items h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #92400e;
+    margin-bottom: 12px;
+  }
+  .open-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: #78350f;
+    margin-bottom: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .open-item::before { content: '→'; color: #f59e0b; font-size: 14px; flex-shrink: 0; }
+
+  /* FINANCIALS BOX */
+  .financials {
+    background: #EAEFF7;
+    border: 1px solid #C5DBF7;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .fin-item { }
+  .fin-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #71A7F5; display: block; margin-bottom: 3px; }
+  .fin-value { font-size: 13.5px; font-weight: 600; color: #1e3a6e; }
+
+  /* FOOTER */
+  .footer {
+    background: #1A1F30;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  @media print {
+    body { background: white; }
+    .cover { padding: 32px; }
+    .map-wrap { padding: 24px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">Regenerative Revival / Got Stem Cells® — Internal Reference</div>
+  <h1>Provider Journey Map<br>Biz in a Box</h1>
+  <p class="cover-sub">Complete end-to-end journey from signing through independent operation. Every stage, role, task, decision gate, and AI-native automation. Built from Agreement v3, Provider Portal Curriculum v5.1, Dinner Seminar SOP, and Business Brain v2.</p>
+  <div class="cover-meta">
+    <div class="meta-item"><span class="meta-label">Version</span><span class="meta-value">v2 — June 2026</span></div>
+    <div class="meta-item"><span class="meta-label">Investment</span><span class="meta-value">$100,000 — Biz in a Box</span></div>
+    <div class="meta-item"><span class="meta-label">Timeline</span><span class="meta-value">90-Day Launch → Independence Month 4+</span></div>
+    <div class="meta-item"><span class="meta-label">Program</span><span class="meta-value">Good Faith Launch Program (Events 1 &amp; 2)</span></div>
+    <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value">Confidential — Internal Use Only</span></div>
+  </div>
+</div>
+
+<div class="map-wrap">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-label">Role:</span>
+    <span class="badge badge-provider">Provider / Owner</span>
+    <span class="badge badge-acct">Account Rep</span>
+    <span class="badge badge-sales">Sales Rep</span>
+    <span class="badge badge-np">NP / PA</span>
+    <span class="badge badge-support">Support Staff</span>
+    <span class="badge badge-rr">RR Internal Ops</span>
+    <div class="legend-divider"></div>
+    <span class="legend-label">System:</span>
+    <span class="badge badge-gsc">GSC / RR Portal</span>
+    <span class="badge badge-hub">Leading Response Hub</span>
+    <span class="badge badge-auto">⚡ AI / Auto</span>
+  </div>
+
+  <!-- ═══════ PHASE 1 ═══════ -->
+  <div class="phase-divider">Phase 1 — Agreement &amp; Training<span>Days 1–45 · Onboarding, legal/MSO setup, certifications, CRM deployment</span></div>
+
+  <!-- STAGE 1 -->
+  <div id="stage-1" class="stage-header gray">
+    <span class="stage-num">1</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Onboarding &amp; Kickoff</span>
+      <span class="stage-sub">Days 1–7</span>
+    </div>
+  </div>
+
+  <div class="col-header">
+    <span>Task</span><span>Owner</span><span>AI Support</span>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Sign agreement · pay $100,000 investment · define practice type</h4>
+      <p>Provider signs Agreement v3 and pays investment in full to begin onboarding. Defines type of practice: Local Medical Office · Virtual/Events Only · Both. Designates team members: Sales Rep, NP/PA, Support Staff.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Welcome Agent collects intake details, flags missing items, builds kickoff checklist.</span></div>
+  </div>
+
+  <div class="row acct-row">
+    <div class="row-main">
+      <h4>Assign onboarding path · schedule kickoff call · collect practice info</h4>
+      <p>Account Rep is assigned and schedules kickoff call. Explains timeline and expectations. Confirms event target window (60–90 days from signing). Collects practice state, location, and NP/PA licensing status.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-acct" style="font-size:10px;">Account Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI drafts kickoff agenda, summarizes provider profile, auto-sends follow-up if call not scheduled within 3 days.</span></div>
+  </div>
+
+  <div class="row rr-row">
+    <div class="row-main">
+      <h4>Create portal access · activate CRM · send welcome sequence</h4>
+      <p>RR Internal Ops provisions Provider Portal access, activates CRM account, and fires the welcome onboarding sequence. All team members receive role-specific task assignments.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-rr" style="font-size:10px;">RR Internal Ops</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Portal provisioning, access permissions, and task sequencing fully automated.</span></div>
+  </div>
+
+  <div class="status-bar">Stage Gate: Agreement signed · $100K investment received · Kickoff call completed · All team members identified</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 2 -->
+  <div id="stage-2" class="stage-header gray">
+    <span class="stage-num">2</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Compliance &amp; Legal Requirements</span>
+      <span class="stage-sub">Days 1–14 (parallel to Stage 1)</span>
+    </div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Establish legal entity · state licensing · malpractice insurance · informed consent language</h4>
+      <p>Provider forms legal entity structure. In applicable states, MSO/PC setup is required. Provider secures malpractice and liability insurance and ensures attorney-reviewed informed consent language is in place before treating patients.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI compliance checklist auto-generated based on provider's state and practice type.</span></div>
+  </div>
+
+  <div class="row acct-row">
+    <div class="row-main">
+      <h4>Walk provider through responsibilities checklist · confirm no-go gaps · escalate to Dana Cook if clinical/compliance issues arise</h4>
+      <p>Account Rep confirms: MSO defined, Arora Health set up if MD or Telehealth needed, key personnel in place (Clinic Operator, Medical Director, NP/PA). Any cross-state regulatory issues (NY, NJ, FL, TN) escalated immediately.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-acct" style="font-size:10px;">Account Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Escalation queue routes flagged compliance items to correct team member automatically.</span></div>
+  </div>
+
+  <div class="decision">
+    <span class="decision-icon">◆</span>
+    <div>
+      <h4>MSO / medical setup complete?</h4>
+      <p><strong>Yes → proceed to training.</strong> MSO formed, Medical Director contracted, NP/PA identified and licensed. Provider cleared to begin treating patients on event day.<br><strong>No → block event confirmation.</strong> Account Rep holds event date until MSO gate is cleared. This is non-negotiable — no patients treated without proper clinical structure.</p>
+    </div>
+  </div>
+
+  <div class="status-bar">Stage Gate: Legal entity confirmed · MSO required before treating patients · Compliance acknowledgment signed (Addendum A)</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 3 -->
+  <div id="stage-3" class="stage-header gray">
+    <span class="stage-num">3</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Training &amp; Certification</span>
+      <span class="stage-sub">Days 14–45 · RR Provider Hub</span>
+    </div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Complete Course 10 (owner orientation) · ensure all staff assigned to correct training tracks</h4>
+      <p>Provider completes their own orientation module and holds team accountable for certification completion. Approves in-person injection training scheduling for NP/PA.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI certification tracker shows real-time completion status. Overdue alerts to provider and Account Rep.</span></div>
+  </div>
+
+  <div class="row sales-row">
+    <div class="row-main">
+      <h4>Complete courses in order → AI Roleplay → Event shadow (Events 1 &amp; 2)</h4>
+      <p>Sales Rep completes Courses 1, 2, 3, 4, 9. Course 1 must be completed first — unlocks all others. Completes AI Roleplay in Provider Hub with passing score. Shadows GSC closer at Events 1 and 2 before closing independently.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-sales" style="font-size:10px;">Sales Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI roleplay coach scores performance and gives feedback. Objection practice available on demand.</span></div>
+  </div>
+
+  <div class="row np-row">
+    <div class="row-main">
+      <h4>Complete online courses → AI Compliance Test → in-person injection training → Event 1 shadow</h4>
+      <p>NP/PA completes Courses 1, 2, 5, 6, 7, 8. Completes AI Compliance Test in Provider Hub. Schedules and completes in-person injection training with RR clinical coordinator. Shadows GSC NP at Event 1.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-np" style="font-size:10px;">NP / PA</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI clinical quiz prep, compliance testing, in-person training scheduling reminders.</span></div>
+  </div>
+
+  <div class="compliance-box">
+    <h4>⚠ Compliant Language Standards — All Staff, All Stages</h4>
+    <ul>
+      <li>Never use the word <strong>cure</strong> in any patient-facing context</li>
+      <li>Never use the word <strong>fix</strong> in any patient-facing context</li>
+      <li>Never use the word <strong>reverse</strong> in any patient-facing context</li>
+      <li>Never use <strong>treat</strong> as a medical claim — e.g., "We treat arthritis" is strictly prohibited</li>
+      <li>Never use the word <strong>guarantee</strong> in any patient-facing context</li>
+      <li>Personal social media: if you identify as working for a regen medicine practice, your posts are legally attributable to the practice. No disease claims, no patient stories. When in doubt — do not post.</li>
+    </ul>
+  </div>
+
+  <div class="status-bar">Stage Gate: Sales Rep passes written quiz at 80% minimum · NP/PA completes in-person injection training · All certifications confirmed before independent operation</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 4 -->
+  <div id="stage-4" class="stage-header gray">
+    <span class="stage-num">4</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Quick Start System Deployment</span>
+      <span class="stage-sub">Days 30+</span>
+    </div>
+  </div>
+
+  <div class="row rr-row">
+    <div class="row-main">
+      <h4>Install CRM · launch website · activate AI agents · load patient database · set event date</h4>
+      <p>RR Internal Ops deploys HighLevel CRM or TyriaCore, practice website, and branded email. AI agents activated: Concierge, Pre-Qual, Scheduling, Follow-Up, Reactivation. Patient database loaded. Direct mail campaign queued for first event date.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-rr" style="font-size:10px;">RR Internal Ops</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Deployment sequencing, database upload, agent activation, and campaign trigger fully automated.</span></div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Approve event date · submit patient database · approve direct-mail demographics · confirm supplier access and cold storage</h4>
+      <p>Provider approves the event date target and submits existing patient database for reactivation — often the first revenue generator. Confirms cold storage is in place for product receipt.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI Database Reactivation Agent begins working the patient list immediately on upload.</span></div>
+  </div>
+
+  <div class="status-bar">Stage Gate: CRM live · AI agents active · Database reactivation launched · Event date confirmed · Direct mail queued</div>
+
+  <div class="connector">↓</div>
+
+  <!-- ═══════ PHASE 2 ═══════ -->
+  <div class="phase-divider">Phase 2 — First Dinner Events with RR Support<span>Days 60–90 · Good Faith Launch Program · GSC funds Events 1 &amp; 2 · Provider team shadows</span></div>
+
+  <!-- STAGE 5 -->
+  <div id="stage-5" class="stage-header blue">
+    <span class="stage-num">5</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Pre-Event Buildout</span>
+      <span class="stage-sub">Weeks 4–8 before event (7–8 weeks out to day before)</span>
+    </div>
+  </div>
+
+  <div class="row support-row">
+    <div class="row-main">
+      <h4>Town research · venue research · restaurant qualification calls · DFS creation · headcount confirmations</h4>
+      <p>Support Staff (or ops team) researches metro anchor markets, scores candidate towns by demographic criteria (age 55+, income, homeownership), identifies and qualifies restaurants using the SOP checklist, creates DFS in Google Drive, and runs headcount confirmation calls and emails per the SOP schedule.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-support" style="font-size:10px;">Support Staff</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Town Research Agent scores markets. Venue Research Agent gathers qualification details. Headcount Confirmation Agent sends scripts on schedule. No-Show Re-Engagement Agent fires automatically.</span></div>
+  </div>
+
+  <div class="row rr-row">
+    <div class="row-main">
+      <h4>Approve town &amp; venue · submit DFS to Leading Response · approve mailer demographics &amp; art · pay mailer invoice · confirm RSVPs in The Hub</h4>
+      <p>RR Internal Ops approves market and venue selections, submits DFS to Leading Response (minimum 4 weeks before event, 6 weeks ideal), approves mailer demographics and art, pays invoice, and monitors RSVP flow in The Hub portal.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-rr" style="font-size:10px;">RR Internal Ops</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">RSVP Tracking Agent monitors flow. Event Health Score dashboard flags green/yellow/red per milestone.</span></div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Approve event date &amp; venue · confirm product order · confirm cold storage · shadow pre-event process</h4>
+      <p>Provider shadows the full pre-event workflow — list creation, mailers, venue booking, lead intake, and appointment confirmation. Confirms product order placed 3–4 weeks out and cold storage is in place.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI event planner presents ranked town and venue recommendations for one-click approval.</span></div>
+  </div>
+
+  <div class="row sales-row">
+    <div class="row-main">
+      <h4>Prepare for warm inbound leads · run pre-assessment calls for confirmed RSVPs · prep hand-off notes for GSC closer</h4>
+      <p>Sales Rep handles warm inbound from RSVP responses. Runs pre-assessment calls to collect condition info before event. Prepares hand-off brief for GSC closer with key patient details.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-sales" style="font-size:10px;">Sales Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI lead-brief generator compiles pre-assessment data. Call coaching scripts in portal.</span></div>
+  </div>
+
+  <div class="status-bar">Stage Gate: Venue booked · DFS submitted to Leading Response · Mail in production · RSVPs flowing · Product ordered · Materials confirmed</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 6 -->
+  <div id="stage-6" class="stage-header blue">
+    <span class="stage-num">6</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Event 1 — Observation</span>
+      <span class="stage-sub">Days 60–90 · GSC-funded · Provider team shadows only</span>
+    </div>
+  </div>
+
+  <div class="financials">
+    <div class="fin-item"><span class="fin-label">Event Funding</span><span class="fin-value">GSC funds all costs</span></div>
+    <div class="fin-item"><span class="fin-label">Revenue Structure</span><span class="fin-value">GSC recovers costs from gross → net profit split 50/50</span></div>
+    <div class="fin-item"><span class="fin-label">Expected Revenue</span><span class="fin-value">$20,000–$50,000+ per multi-day event (historical)</span></div>
+  </div>
+
+  <div class="row rr-row">
+    <div class="row-main">
+      <h4>GSC Closer leads all consultations · GSC NP administers all treatments · records event for training</h4>
+      <p>GSC Closer handles the full presentation and all 1:1 consultations. GSC NP administers all treatments. RR records the event — recordings are converted into training modules for provider's Sales Rep review.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-rr" style="font-size:10px;">RR Internal Ops</span><span class="badge badge-gsc" style="font-size:10px; margin-top:4px;">GSC Closer</span><span class="badge badge-np" style="font-size:10px; margin-top:4px;">GSC NP</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Post-event follow-up automation, cost-recovery calculation, commission tracking, recording upload to portal — all automated.</span></div>
+  </div>
+
+  <div class="row sales-row">
+    <div class="row-main">
+      <h4>Shadow GSC closer at all consultations — observe only · no independent closes</h4>
+      <p>Sales Rep observes all consultations. Takes notes on consultation flow, objection handling, and pricing presentation. Does not close independently at Event 1.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-sales" style="font-size:10px;">Sales Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI note capture assistant. Post-event coaching recap generated from shadow session.</span></div>
+  </div>
+
+  <div class="row np-row">
+    <div class="row-main">
+      <h4>Shadow GSC NP — observe product prep, consent delivery, injection procedure, discharge workflow · no independent treatments</h4>
+      <p>NP/PA observes the full clinical workflow with the GSC NP. Does not administer treatments independently at Event 1.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-np" style="font-size:10px;">NP / PA</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI clinical shadow checklist. Post-event competency gap report generated automatically.</span></div>
+  </div>
+
+  <div class="row support-row">
+    <div class="row-main">
+      <h4>Patient check-in · confirmations · payment support · post-event appointment booking · no-show management</h4>
+      <p>Support Staff handles all day-of operations: patient check-in, headcount, payment coordination, booking post-event treatment appointments, and managing no-shows.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-support" style="font-size:10px;">Support Staff</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI check-in list, real-time headcount tracker, post-event no-show follow-up sequence launches automatically.</span></div>
+  </div>
+
+  <div class="status-bar">Stage Gate: Event 1 complete · Revenue collected · Sales Rep shadow requirement met · NP/PA shadow requirement met · Debrief completed</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 7 -->
+  <div id="stage-7" class="stage-header blue">
+    <span class="stage-num">7</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Post-Event 1 — Review &amp; Improvement Loop</span>
+      <span class="stage-sub">2–4 weeks between events</span>
+    </div>
+  </div>
+
+  <div class="row acct-row">
+    <div class="row-main">
+      <h4>Lead debrief session · assign accountability for each improvement area · confirm Event 2 plan</h4>
+      <p>Account Rep facilitates post-event debrief, compiles improvement areas, assigns ownership, and confirms Event 2 date and readiness plan.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-acct" style="font-size:10px;">Account Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI debrief survey auto-sent to all roles post-event. Account Rep receives compiled summary within 24 hours.</span></div>
+  </div>
+
+  <div class="row sales-row">
+    <div class="row-main">
+      <h4>Review Event 1 recording · repeat AI Roleplay with Event 1 scenarios · prepare for more active Event 2 role</h4>
+      <p>Sales Rep reviews recorded consultations from Event 1, reruns AI Roleplay using those real scenarios, and prepares to take a more active participation role at Event 2.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-sales" style="font-size:10px;">Sales Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI roleplay using actual Event 1 consultation recordings. Objection scenarios generated from real event data.</span></div>
+  </div>
+
+  <div class="row auto-row">
+    <div class="row-main">
+      <h4>⚡ Auto — AI Follow-Up &amp; Reactivation Agent fires for all unconverted and no-show attendees</h4>
+      <p>SMS and email sequences automatically sent to every attendee who did not close or no-showed at Event 1. Sequences run without staff intervention. Re-engagement attempts continue until next event booking or opt-out.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-auto" style="font-size:10px;">Auto</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI Follow-Up &amp; Reactivation Agent fully autonomous.</span></div>
+  </div>
+
+  <div class="status-bar">Stage Gate: Debrief complete · Gaps assigned and actioned · Sales Rep ready for active Event 2 role · Event 2 date confirmed</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 8 -->
+  <div id="stage-8" class="stage-header blue">
+    <span class="stage-num">8</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Event 2 — Participation &amp; Final Certification</span>
+      <span class="stage-sub">Month 3–4 · GSC-funded · Provider team takes active role</span>
+    </div>
+  </div>
+
+  <div class="financials">
+    <div class="fin-item"><span class="fin-label">Event Funding</span><span class="fin-value">GSC funds all costs</span></div>
+    <div class="fin-item"><span class="fin-label">Revenue Structure</span><span class="fin-value">GSC recovers costs from gross → net profit split 50/50</span></div>
+    <div class="fin-item"><span class="fin-label">Certification Milestone</span><span class="fin-value">Event 2 completion = final requirement for full certification</span></div>
+  </div>
+
+  <div class="row sales-row">
+    <div class="row-main">
+      <h4>Take active consultation role · practice transitions from shadow to participant · GSC Closer coaches in real time</h4>
+      <p>Sales Rep participates actively in consultations with GSC Closer alongside. GSC Closer provides real-time coaching. Completing Event 2 earns the GSC Sales Certification.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-sales" style="font-size:10px;">Sales Rep</span><span class="badge badge-gsc" style="font-size:10px; margin-top:4px;">GSC Closer</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI consultation prep, objection prompts, and real-time coaching support available in portal.</span></div>
+  </div>
+
+  <div class="row np-row">
+    <div class="row-main">
+      <h4>Operate in primary clinical role with GSC NP oversight · administer treatments with supervision · document independently</h4>
+      <p>NP/PA takes the primary treatment role with the GSC NP providing direct oversight. Administers injections, delivers consent, documents independently. Completing Event 2 earns the GSC NP Clinical Certification.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-np" style="font-size:10px;">NP / PA</span><span class="badge badge-np" style="font-size:10px; margin-top:4px;">GSC NP</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI treatment-day workflow support, documentation prompts, and competency tracking.</span></div>
+  </div>
+
+  <div class="row acct-row">
+    <div class="row-main">
+      <h4>Observe and assess provider team readiness · confirm Event 3 plan · flag any remaining gaps before independence</h4>
+      <p>Account Rep uses Event 2 to formally score provider team independence readiness. Any remaining gaps are documented and assigned before Event 3 is confirmed.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-acct" style="font-size:10px;">Account Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI independence scorecard generated from Event 2 performance data.</span></div>
+  </div>
+
+  <div class="status-bar green">Stage Gate: Event 2 complete · Sales Rep earns GSC Sales Certification · NP/PA earns GSC NP Clinical Certification · Provider team cleared for independent operation</div>
+
+  <div class="connector">↓</div>
+
+  <!-- ═══════ PHASE 3 ═══════ -->
+  <div class="phase-divider">Phase 3 — Independent Scale<span>Month 4+ · Provider funds all events · Retains 100% of profits · Good Faith Launch Program exits</span></div>
+
+  <!-- STAGE 9 -->
+  <div id="stage-9" class="stage-header green">
+    <span class="stage-num">9</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Independence Transition &amp; Support Selection</span>
+      <span class="stage-sub">Month 4+ · Account Rep transitions to coaching mode</span>
+    </div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Confirm all staff certified · fund Event 3 · confirm end-to-end operations capability · select ongoing support tier</h4>
+      <p>Provider confirms all certifications are in place and funds Event 3 costs entirely from the practice. Good Faith Launch Program officially exits. Provider selects ongoing support options.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI independence checklist confirms all green before Event 3 is unlocked.</span></div>
+  </div>
+
+  <div class="split-3">
+    <div class="split-box blue">
+      <span class="split-label">Option 1</span>
+      <h4>Foundational Support</h4>
+      <p>$497 / month. Coaching, portal access, Account Rep check-ins.</p>
+    </div>
+    <div class="split-box blue">
+      <span class="split-label">Option 2 — Add-on</span>
+      <h4>Organic Video Content</h4>
+      <p>$997 / month. Managed organic content creation and posting.</p>
+    </div>
+    <div class="split-box blue">
+      <span class="split-label">Option 3 — Add-on</span>
+      <h4>Paid Advertising</h4>
+      <p>$997 / month. Meta ad management driving event and consultation leads.</p>
+    </div>
+  </div>
+
+  <div class="row acct-row">
+    <div class="row-main">
+      <h4>Validate full readiness · formally transition to coaching mode · confirm ongoing support tier selected</h4>
+      <p>Account Rep conducts final readiness review, transitions to weekly strategic check-in mode, and confirms which ongoing support tiers are active.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-acct" style="font-size:10px;">Account Rep</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI transition summary auto-generated. Weekly digest sent before each check-in with open items, KPIs, and risk flags pre-loaded.</span></div>
+  </div>
+
+  <div class="status-bar green">Stage Gate: Good Faith Launch Program exits · All certifications confirmed · Event 3 funded · Retainer active · Account Rep in coaching mode only</div>
+
+  <div class="connector">↓</div>
+
+  <!-- STAGE 10 -->
+  <div id="stage-10" class="stage-header green">
+    <span class="stage-num">10</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Event 3+ &amp; Full AI Automation</span>
+      <span class="stage-sub">Month 4+ · Provider owns 100% of profits · AI stack running 24/7</span>
+    </div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Fund event costs · own all local decisions and P&amp;L · maintain staff, compliance, and product sourcing · scale to additional conditions as ready</h4>
+      <p>Provider runs the full system independently: event planning, marketing, patient experience, clinical delivery, compliance, and revenue. GSC provides operational support at no additional charge.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI business dashboard: event planner, revenue tracker, market research, compliance monitoring all running in background.</span></div>
+  </div>
+
+  <div class="row auto-row">
+    <div class="row-main">
+      <h4>⚡ Full AI Agent Stack — running 24/7</h4>
+      <p><strong>Patient Concierge Agent</strong> — answers leads around the clock.<br>
+      <strong>Pre-Qualification Agent</strong> — screens leads before rep involvement.<br>
+      <strong>Appointment Scheduling Agent</strong> — books without phone tag.<br>
+      <strong>Follow-Up &amp; Reactivation Agent</strong> — re-engages cold and unconverted leads automatically.<br>
+      <strong>Revenue Dashboard</strong> — live pipeline and event performance tracking.<br>
+      Human handles exceptions only. Provider focuses on clinical care and scaling.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-auto" style="font-size:10px;">Auto</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">Orchestration engine, compliance monitoring, self-improvement loop, and agent performance tracking all running autonomously.</span></div>
+  </div>
+
+  <div class="status-bar green">Stage Gate: Provider successfully funds and executes Event 3+ independently · AI stack active · Provider retains 100% of net profit</div>
+
+  <div class="connector">↓</div>
+
+  <!-- ═══════ PHASE 4 ═══════ -->
+  <div class="phase-divider">Phase 4 — Growth &amp; Expansion<span>Month 4+ · Additional channels, conditions, and revenue protocols</span></div>
+
+  <!-- STAGE 11 -->
+  <div id="stage-11" class="stage-header gold">
+    <span class="stage-num">11</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Paid &amp; Organic Marketing Scale</span>
+      <span class="stage-sub">Optional — activated when provider is ready</span>
+    </div>
+  </div>
+
+  <div class="row provider-row">
+    <div class="row-main">
+      <h4>Launch Meta ads to events · online webinars · individual consultation scheduling</h4>
+      <p>Provider scales lead flow beyond direct mail. Meta ads drive attendees to dinner events. Online webinars serve as an alternative event format. Individual consultation scheduling opens direct-to-consumer access.</p>
+    </div>
+    <div class="row-owner"><span class="badge badge-provider" style="font-size:10px;">Provider / Owner</span></div>
+    <div class="row-ai"><span style="font-size:11px;color:#8a9ab5;">AI agents handle lead intake, pre-qualification, and appointment booking across all three channels without adding headcount.</span></div>
+  </div>
+
+  <!-- STAGE 12 -->
+  <div id="stage-12" class="stage-header gold">
+    <span class="stage-num">12</span>
+    <div class="stage-title-wrap">
+      <span class="stage-title">Condition Protocol Expansion</span>
+      <span class="stage-sub">Add-on training required for each new condition</span>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="split-box yes">
+      <span class="split-label">Available Conditions</span>
+      <h4>Additional Revenue Protocols</h4>
+      <p>• Neuropathy — up to $14,000 per patient<br>• Hair Restoration<br>• IV Hydration &amp; Anti-Aging<br>• Cosmetic Procedures<br>• HRT / TRT Optimization<br>• Peptide Therapy</p>
+    </div>
+    <div class="split-box blue">
+      <span class="split-label">Requirement</span>
+      <h4>Add-On Training Required</h4>
+      <p>Provider must complete the GSC training and certification track for each new condition protocol before offering to patients. Certification gate enforced in Provider Portal.</p>
+    </div>
+  </div>
+
+  <!-- HUMAN GATES -->
+  <div class="open-items" style="background:#fdf2f1; border-color:#E24B4A;">
+    <h4 style="color:#A32D2D;">🔒 Human-in-the-Loop Gates — Non-Negotiable · Cannot Be Automated</h4>
+    <div class="open-item" style="color:#7a1f1f;">Provider legal, licensing, and compliance signoff (Stage 2)</div>
+    <div class="open-item" style="color:#7a1f1f;">Medical MSO formation before treating any patients (Stage 2)</div>
+    <div class="open-item" style="color:#7a1f1f;">All staff certifications confirmed before independent operation (Stages 3 &amp; 8)</div>
+    <div class="open-item" style="color:#7a1f1f;">Event date and venue approval — human decision at every event (Stage 5)</div>
+    <div class="open-item" style="color:#7a1f1f;">Clinical treatment delivery — NP/PA only, on-site, every event</div>
+    <div class="open-item" style="color:#7a1f1f;">Event consultations and close — certified staff only from Stage 8 forward</div>
+    <div class="open-item" style="color:#7a1f1f;">Patient complaints or adverse events — escalate to Dana Cook immediately</div>
+    <div class="open-item" style="color:#7a1f1f;">Any cross-state regulatory issue (NY, NJ, FL, TN) — flag immediately to Dana Cook</div>
+    <div class="open-item" style="color:#7a1f1f;">Any decision that changes the shape of the business — escalate to Seth Berge</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Regenerative Revival / Got Stem Cells® &nbsp;•&nbsp; Provider Journey Map v2 &nbsp;•&nbsp; June 2026 &nbsp;•&nbsp; Confidential — Internal Use Only<br>
+  Built from: Agreement v3 · Provider Portal Curriculum v5.1 · Dinner Seminar SOP · Business Brain v2
+</div>
+
+
+
+</body></html>
