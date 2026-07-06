@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provider Journey Checklist — Regenerative Revival</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── TOKENS ── */
+  :root {
+    --ink:       #0f1923;
+    --ink-2:     #3d4f5e;
+    --ink-3:     #7a8f9e;
+    --surface:   #ffffff;
+    --surface-1: #f4f7fa;
+    --surface-2: #eaf0f6;
+    --border:    #dce5ed;
+    --border-strong: #b8c9d8;
+
+    --blue:      #1a5fa8;
+    --blue-bg:   #e8f1fb;
+    --blue-mid:  #3478c5;
+
+    --green:     #1a7a4a;
+    --green-bg:  #e6f6ee;
+    --green-mid: #2a9e60;
+
+    --gold:      #8a5a00;
+    --gold-bg:   #fdf3dc;
+    --gold-mid:  #c07f10;
+
+    --red:       #a32020;
+    --red-bg:    #fdeaea;
+
+    --radius:    6px;
+    --radius-lg: 10px;
+    font-size: 15px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    background: var(--surface-1);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--ink);
+    padding: 0 32px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-logo {
+    width: 28px;
+    height: 28px;
+    background: var(--blue-mid);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .topbar-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.02em;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .topbar-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── PROVIDER BAR ── */
+  .provider-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .pb-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pb-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  select, input[type="text"] {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--surface-1);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  select:focus, input[type="text"]:focus {
+    border-color: var(--blue-mid);
+    background: var(--surface);
+  }
+  select { min-width: 220px; cursor: pointer; }
+  .initials-input { width: 72px; text-transform: uppercase; text-align: center; letter-spacing: 0.08em; }
+  .initials-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border);
+  }
+  .pb-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+  }
+  .sync-status {
+    font-size: 11px;
+    color: var(--ink-3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sync-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green-mid);
+  }
+  .sync-dot.syncing { background: var(--gold-mid); animation: pulse 1s infinite; }
+  .sync-dot.error { background: var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ── OVERALL PROGRESS ── */
+  .progress-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .ps-label { font-size: 12px; color: var(--ink-3); white-space: nowrap; }
+  .ps-bar-wrap { flex: 1; height: 5px; background: var(--surface-2); border-radius: 3px; overflow: hidden; max-width: 400px; }
+  .ps-bar-fill { height: 100%; background: var(--blue-mid); border-radius: 3px; transition: width 0.4s; }
+  .ps-pct { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--blue); min-width: 38px; }
+  .ps-counts { font-size: 12px; color: var(--ink-3); }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 28px 0 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  .phase-header span {
+    color: var(--ink-3);
+    font-weight: 400;
+    margin-left: 8px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* ── STAGE BLOCK ── */
+  .stage-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .stage-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.12s;
+  }
+  .stage-head:hover { background: var(--surface-1); }
+  .stage-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--surface-2);
+    color: var(--ink-2);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .stage-num.complete { background: var(--green-bg); color: var(--green); border-color: var(--green-mid); }
+  .stage-num.blue-phase { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-mid); }
+  .stage-num.green-phase { background: var(--green-bg); color: var(--green); border-color: var(--green-mid); }
+  .stage-num.gold-phase { background: var(--gold-bg); color: var(--gold); border-color: var(--gold-mid); }
+
+  .stage-info { flex: 1; min-width: 0; }
+  .stage-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .stage-sub { font-size: 11px; color: var(--ink-3); margin-top: 1px; }
+  .stage-mini-bar-wrap { height: 3px; background: var(--surface-2); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+  .stage-mini-bar { height: 3px; border-radius: 2px; transition: width 0.3s; }
+  .stage-mini-bar.blue-phase  { background: var(--blue-mid); }
+  .stage-mini-bar.green-phase { background: var(--green-mid); }
+  .stage-mini-bar.gold-phase  { background: var(--gold-mid); }
+  .stage-mini-bar.gray-phase  { background: var(--border-strong); }
+
+  .stage-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-3); white-space: nowrap; flex-shrink: 0; }
+  .stage-chevron { color: var(--ink-3); font-size: 13px; transition: transform 0.2s; flex-shrink: 0; }
+  .stage-chevron.open { transform: rotate(180deg); }
+
+  /* ── STAGE BODY ── */
+  .stage-body { display: none; border-top: 1px solid var(--border); }
+  .stage-body.open { display: block; }
+
+  /* ── ITEM ROW ── */
+  .item-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .item-row:last-of-type { border-bottom: none; }
+  .item-row:hover { background: var(--surface-1); }
+  .item-row.checked { background: #f4fbf7; }
+  .item-row.checked:hover { background: #ecf8f2; }
+
+  .item-check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    font-size: 11px;
+    color: transparent;
+  }
+  .item-check.checked {
+    background: var(--green-mid);
+    border-color: var(--green-mid);
+    color: white;
+  }
+
+  .item-text {
+    flex: 1;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .item-row.checked .item-text {
+    color: var(--ink-3);
+    text-decoration: line-through;
+    text-decoration-color: var(--border-strong);
+  }
+
+  .item-sigs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 60px;
+  }
+  .sig-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    background: var(--blue-bg);
+    color: var(--blue);
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid #c5d9f0;
+    white-space: nowrap;
+    cursor: pointer;
+    title: "Click to remove your sign-off";
+  }
+  .sig-pill.me {
+    background: var(--green-bg);
+    color: var(--green);
+    border-color: #9ed4b8;
+  }
+
+  /* ── STAGE GATE ── */
+  .stage-gate {
+    padding: 9px 16px;
+    background: var(--surface-1);
+    border-top: 1px solid var(--border);
+    font-size: 11.5px;
+    color: var(--ink-2);
+    font-style: italic;
+  }
+  .stage-gate strong { font-style: normal; font-weight: 600; color: var(--ink); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-3);
+  }
+  .empty-state h3 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--ink-2); }
+  .empty-state p { font-size: 13px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,25,35,0.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .modal p { font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-bottom: 18px; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-ghost { background: transparent; border-color: var(--border-strong); color: var(--ink-2); }
+  .btn-green { background: var(--green-mid); color: white; }
+  .btn-red   { background: var(--red); color: white; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--ink);
+    color: rgba(255,255,255,0.92);
+    font-size: 13px;
+    padding: 9px 18px;
+    border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    z-index: 300;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .topbar { padding: 0 16px; }
+    .provider-bar { padding: 12px 16px; }
+    .progress-strip { padding: 10px 16px; }
+    .main { padding: 16px 12px 48px; }
+    select { min-width: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">RR</div>
+    <span class="topbar-title">Provider Journey Checklist</span>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-label">Biz in a Box · Internal</span>
+  </div>
+</div>
+
+<!-- PROVIDER + INITIALS BAR -->
+<div class="provider-bar">
+  <div class="pb-group">
+    <span class="pb-label">Provider</span>
+    <select id="provider-select">
+      <option value="">— Select provider —</option>
+    </select>
+  </div>
+  <div class="pb-divider"></div>
+  <div class="pb-group">
+    <span class="pb-label">Your initials</span>
+    <input type="text" class="initials-input" id="initials-input" maxlength="4" placeholder="TM" autocomplete="off" />
+    <div class="initials-avatar" id="initials-avatar">—</div>
+  </div>
+  <div class="pb-divider"></div>
+  <div class="sync-status" id="sync-status">
+    <div class="sync-dot" id="sync-dot"></div>
+    <span id="sync-label">Ready</span>
+  </div>
+</div>
+
+<!-- OVERALL PROGRESS -->
+<div class="progress-strip" id="progress-strip" style="display:none">
+  <span class="ps-label">Overall progress</span>
+  <div class="ps-bar-wrap"><div class="ps-bar-fill" id="overall-bar" style="width:0%"></div></div>
+  <span class="ps-pct" id="overall-pct">0%</span>
+  <span class="ps-counts" id="overall-counts"></span>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main-content">
+  <div class="empty-state">
+    <h3>Select a provider to begin</h3>
+    <p>Choose a provider from the dropdown above, then enter your initials to start checking off items.</p>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title"></h3>
+    <p id="modal-body"></p>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONFIG — Joe: replace with your Worker URL
+// ─────────────────────────────────────────────
+const API_URL = 'https://rr-checklist-api.visual-edge.workers.dev/checklist';
+
+// ─────────────────────────────────────────────
+// PROVIDERS — add new providers here
+// { id, label } — id must be unique, lowercase, no spaces
+// ─────────────────────────────────────────────
+const PROVIDERS = [
+  { id: 'rr-001-berge-dallas',   label: 'RR-001 · Berge — Dallas' },
+  // { id: 'rr-002-smith-houston', label: 'RR-002 · Smith — Houston' },
+];
+
+// ─────────────────────────────────────────────
+// CHECKLIST DATA
+// ─────────────────────────────────────────────
+const STAGES = [
+  {
+    id: 1, phase: 'Phase 1 — Agreement & Training', phaseStart: true,
+    color: 'gray-phase',
+    title: 'Onboarding & kickoff', sub: 'Days 1–7',
+    gate: 'Agreement signed · payment received · kickoff call completed · all team members identified',
+    items: [
+      'Agreement signed',
+      '$100,000 investment received in full',
+      'Account Rep assigned',
+      'Kickoff call scheduled',
+      'Kickoff call completed',
+      'Provider type selected: Local Medical Office, Virtual/Events Only, or Both',
+      'Practice location/state confirmed',
+      'Sales Rep identified',
+      'NP/PA identified',
+      'Support Staff identified',
+      'Provider Portal access created',
+      'CRM access created',
+      'Welcome sequence sent',
+      'All team members assigned role-specific onboarding tasks',
+    ]
+  },
+  {
+    id: 2, color: 'gray-phase',
+    title: 'Compliance & legal requirements', sub: 'Before any patient treatment',
+    gate: 'Medical setup complete · provider cleared before treating patients',
+    items: [
+      'Legal entity structure confirmed',
+      'MSO requirement reviewed',
+      'MSO/PC structure established if required by state',
+      'Arora Health setup reviewed if MD or telehealth support is needed',
+      'Clinic Operator identified',
+      'Medical Director identified/contracted',
+      'NP/PA licensing confirmed',
+      'State licensing requirements reviewed',
+      'Malpractice insurance confirmed',
+      'Liability insurance confirmed',
+      'FDA compliance guidance reviewed',
+      'Attorney-reviewed informed consent language confirmed',
+      'Compliance acknowledgment (Addendum A) signed',
+      'Cross-state regulatory review completed if applicable',
+      'Dana Cook escalation completed if any clinical/compliance issue exists',
+    ]
+  },
+  {
+    id: 3, color: 'gray-phase',
+    title: 'Training & certification', sub: 'All staff before working leads or patients',
+    gate: 'Sales Rep passed quiz · NP/PA completed in-person injection training · all certifications complete',
+    items: [
+      'Provider/Owner: Course 10 completed',
+      'Provider/Owner: Staff assigned to correct training tracks',
+      'In-person NP/PA training approved and scheduled',
+      'Sales Rep: Course 1 completed',
+      'Sales Rep: Course 2 completed',
+      'Sales Rep: Course 3 completed',
+      'Sales Rep: Course 4 completed',
+      'Sales Rep: Course 9 completed',
+      'Sales Rep: AI Roleplay completed',
+      'Sales Rep: Written quiz passed (80% minimum)',
+      'Sales Rep: Event 1 shadow requirement scheduled',
+      'Sales Rep: Event 2 shadow requirement scheduled',
+      'NP/PA: Course 1 completed',
+      'NP/PA: Course 2 completed',
+      'NP/PA: Course 5 completed',
+      'NP/PA: Course 6 completed',
+      'NP/PA: Course 7 completed',
+      'NP/PA: Course 8 completed',
+      'NP/PA: AI Compliance Test completed',
+      'NP/PA: In-person injection training scheduled',
+      'NP/PA: In-person injection training completed',
+      'NP/PA: Event 1 shadow scheduled',
+      'Support Staff: Front-desk training assigned and completed',
+      'Support Staff: Workflow readiness confirmed',
+      'Team trained on compliant language standards',
+      'Team understands banned words: cure, fix, reverse, treat, guarantee',
+      'Team understands social media compliance rules',
+    ]
+  },
+  {
+    id: 4, color: 'gray-phase',
+    title: 'Quick Start system deployment', sub: 'CRM, website, AI agents, event launch infrastructure',
+    gate: 'CRM live · AI agents active · database reactivation launched · first event date confirmed',
+    items: [
+      'HighLevel CRM or TyriaCore installed',
+      'Provider portal live',
+      'Consumer-facing website launched',
+      'Clinic/location page live',
+      'Branded email/domain configured',
+      'AI Concierge Agent activated',
+      'AI Pre-Qualification Agent activated',
+      'AI Scheduling Agent activated',
+      'AI Follow-Up Agent activated',
+      'AI Reactivation Agent activated',
+      'Existing patient database submitted',
+      'Database uploaded into system',
+      'Database reactivation launched',
+      'Direct-mail workflow queued',
+      'Event date approved',
+      'Event date entered into system',
+      'Supplier access confirmed',
+      'Cold storage confirmed',
+      'Launch status reviewed by Account Rep',
+    ]
+  },
+  {
+    id: 5, phase: 'Phase 2 — Supported Launch', phaseStart: true,
+    color: 'blue-phase',
+    title: 'Pre-event buildout', sub: 'Everything ready for first dinner event',
+    gate: 'Venue booked · DFS submitted · mail in production · RSVPs flowing · product ordered · materials confirmed',
+    items: [
+      'Metro anchor selected',
+      'Town research completed',
+      'Candidate towns ranked by demographics',
+      'Final town approved',
+      'Leading Response restaurant list requested',
+      'Rep travel history checked',
+      'Restaurant shortlist created',
+      'Venue qualification calls completed',
+      'Venue approved',
+      'Restaurant contract signed',
+      'Deposit paid if required',
+      'DFS created in Google Drive',
+      'DFS submitted to Leading Response',
+      'Mail quantity confirmed',
+      'Demographics approved',
+      'Mailer art approved',
+      'Mailer invoice paid',
+      'Mailer in production',
+      'Landing pages confirmed live',
+      'Confirmation sequences active',
+      'Reminder automations active',
+      'RSVP tracking active in The Hub',
+      'Product order approved',
+      'Product ordered',
+      'Cold storage reconfirmed',
+      'Event materials confirmed',
+      'Patient intake workflow confirmed',
+      'Headcount confirmation call scheduled',
+      'Final headcount sent to restaurant',
+      'Provider shadow expectations reviewed',
+      'Sales Rep warm lead process reviewed',
+      'Pre-assessment calls started',
+      'Hand-off notes prepared for GSC closer',
+      'NP/PA event availability confirmed',
+      'Support Staff assigned to confirmations and scheduling',
+    ]
+  },
+  {
+    id: 6, color: 'blue-phase',
+    title: 'Event 1 — observation', sub: 'First RR/GSC-supported event · team shadowing',
+    gate: 'Event 1 complete · revenue collected · Sales Rep shadow met · NP/PA shadow met · debrief completed',
+    items: [
+      'GSC closer confirmed onsite',
+      'GSC NP confirmed onsite',
+      'Event agenda confirmed',
+      'Patient confirmations completed',
+      'Check-in materials ready',
+      'Payment workflow confirmed',
+      'Sales Rep assigned to shadow all consultations',
+      'NP/PA assigned to shadow GSC NP',
+      'Support Staff assigned to check-in and patient flow',
+      'Event recordings captured',
+      'Revenue tracked',
+      'Cost recovery tracked',
+      'Profit split documented',
+      'Post-event appointments booked',
+      'No-shows documented',
+      'Post-event debrief scheduled',
+      'Post-event debrief completed',
+    ]
+  },
+  {
+    id: 7, color: 'blue-phase',
+    title: 'Post-Event 1 review & improvement', sub: 'Capture lessons · prepare for Event 2',
+    gate: 'Gaps assigned and actioned · Sales Rep ready for Event 2 · Event 2 confirmed',
+    items: [
+      'Debrief notes compiled',
+      'Improvement areas identified',
+      'Ownership assigned for each issue',
+      'Event 1 recordings uploaded',
+      'Event 1 recordings reviewed by Sales Rep',
+      'AI Roleplay rerun using Event 1 scenarios',
+      'NP/PA reviewed Event 1 clinical workflow',
+      'Support Staff reviewed confirmations / no-show data',
+      'AI follow-up and reactivation sequence launched',
+      'Readiness reassessment completed',
+      'Event 2 date confirmed',
+    ]
+  },
+  {
+    id: 8, color: 'blue-phase',
+    title: 'Event 2 — participation & final certification', sub: 'Provider team participates actively',
+    gate: 'Event 2 complete · Sales Rep RR certification earned · NP/PA RR certification earned · team cleared for independence',
+    items: [
+      'Event 2 scheduled',
+      'GSC closer confirmed for support',
+      'GSC NP confirmed for oversight',
+      'Provider team role assignments confirmed',
+      'Sales Rep prepared to participate in consultations',
+      'Provider sales team prepared to present/close with support',
+      'NP/PA prepared to administer treatment with oversight',
+      'Support Staff prepared to manage event logistics independently',
+      'Event recordings captured',
+      'Independence readiness reviewed by Account Rep',
+      'Final certification status confirmed',
+      'Remaining gaps documented',
+      'Event 3 plan drafted',
+    ]
+  },
+  {
+    id: 9, phase: 'Phase 3 — Independent Scale', phaseStart: true,
+    color: 'green-phase',
+    title: 'Independence transition & support selection', sub: 'Month 4+ · Account Rep transitions to coaching',
+    gate: 'Good Faith Launch Program exits · all certifications confirmed · Event 3 funded · retainer active',
+    items: [
+      'All staff certifications reconfirmed',
+      'Independence checklist completed',
+      'Event 3 funding confirmed',
+      'Good Faith Launch Program exit confirmed',
+      'Provider can run event end-to-end',
+      'Account Rep readiness review completed',
+      'Weekly coaching mode activated',
+      'Foundational support option reviewed ($497/month)',
+      'Organic video add-on reviewed ($997/month)',
+      'Paid advertising add-on reviewed ($997/month)',
+      'Ongoing support tier selected',
+      'Transition summary delivered',
+    ]
+  },
+  {
+    id: 10, color: 'green-phase',
+    title: 'Event 3+ & full AI automation', sub: 'Provider runs independently · AI stack 24/7',
+    gate: 'Provider funds and executes Event 3+ independently · AI stack active · 100% net profit retained',
+    items: [
+      'Provider funded independent event',
+      'Event budget approved',
+      'Provider retains 100% of event profit',
+      'AI Patient Concierge active',
+      'AI Pre-Qualification Agent active',
+      'AI Scheduling Agent active',
+      'AI Follow-Up & Reactivation Agent active',
+      'Revenue Dashboard active',
+      'Staff managing exceptions only',
+      'Compliance monitoring active',
+      'Weekly KPI review active',
+      'Event performance tracked',
+      'Ongoing scaling plan reviewed',
+    ]
+  },
+  {
+    id: 11, phase: 'Phase 4 — Growth & Expansion', phaseStart: true,
+    color: 'gold-phase',
+    title: 'Paid & organic growth', sub: 'Optional — activated when provider is ready',
+    gate: 'Paid and/or organic growth channels active',
+    items: [
+      'Meta ads strategy approved',
+      'Meta ads creative developed',
+      'Meta ads campaign launched',
+      'Webinar offer created',
+      'Webinar funnel created',
+      'Individual consultation offer created',
+      'AI lead intake active for all channels',
+      'AI pre-qualification active for all channels',
+      'Scheduling workflow active for all channels',
+      'Reporting dashboard updated for new channels',
+    ]
+  },
+  {
+    id: 12, color: 'gold-phase',
+    title: 'Condition protocol expansion', sub: 'Add-on training required per new condition',
+    gate: 'New condition certified and ready for launch',
+    items: [
+      'New condition opportunity selected',
+      'Training requirement reviewed',
+      'Add-on certification assigned',
+      'Add-on certification completed',
+      'Clinical protocol approved',
+      'Marketing/compliance language reviewed',
+      'Sales training completed for new condition',
+      'NP/PA training completed for new condition',
+      'Offer launched in CRM/funnel/event process',
+      'Revenue tracking updated',
+    ]
+  },
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let currentProvider = '';
+let currentInitials = '';
+let checkData = {};       // { "s1_i0": { "TM": "2026-07-06 10:32", "JO": "..." }, ... }
+let pendingAction = null;
+let saveTimer = null;
+
+function itemKey(stageId, idx) { return `s${stageId}_i${idx}`; }
+function getItem(sId, idx) { return checkData[itemKey(sId, idx)] || null; }
+
+// ─────────────────────────────────────────────
+// API  (falls back to localStorage if no API configured)
+// ─────────────────────────────────────────────
+const USE_API = API_URL && !API_URL.includes('YOUR-WORKER');
+
+async function loadFromAPI(providerId) {
+  if (!USE_API) return loadFromLocal(providerId);
+  setSyncStatus('syncing', 'Loading…');
+  try {
+    const r = await fetch(`${API_URL}?provider=${encodeURIComponent(providerId)}`);
+    if (!r.ok) throw new Error(r.status);
+    const json = await r.json();
+    checkData = json.data || {};
+    setSyncStatus('ok', 'Synced');
+  } catch(e) {
+    setSyncStatus('error', 'Offline — using local');
+    loadFromLocal(providerId);
+  }
+}
+
+async function saveToAPI() {
+  if (!USE_API) { saveToLocal(); return; }
+  setSyncStatus('syncing', 'Saving…');
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider: currentProvider, data: checkData }),
+    });
+    setSyncStatus('ok', 'Saved');
+  } catch(e) {
+    setSyncStatus('error', 'Save failed');
+    saveToLocal();
+  }
+}
+
+function loadFromLocal(providerId) {
+  try {
+    const raw = localStorage.getItem(`rr_checklist_${providerId}`);
+    checkData = raw ? JSON.parse(raw) : {};
+  } catch(e) { checkData = {}; }
+}
+
+function saveToLocal() {
+  if (!currentProvider) return;
+  try { localStorage.setItem(`rr_checklist_${currentProvider}`, JSON.stringify(checkData)); } catch(e) {}
+}
+
+function debouncedSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToAPI, 600);
+}
+
+function setSyncStatus(state, label) {
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot' + (state === 'syncing' ? ' syncing' : state === 'error' ? ' error' : '');
+  lbl.textContent = label;
+}
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function buildChecklist() {
+  const container = document.getElementById('main-content');
+  if (!currentProvider) {
+    container.innerHTML = '<div class="empty-state"><h3>Select a provider to begin</h3><p>Choose a provider from the dropdown above, then enter your initials to start checking off items.</p></div>';
+    document.getElementById('progress-strip').style.display = 'none';
+    return;
+  }
+  document.getElementById('progress-strip').style.display = 'flex';
+  let html = '';
+  STAGES.forEach(stage => {
+    if (stage.phaseStart) {
+      html += `<div class="phase-header">${stage.phase}</div>`;
+    }
+    html += buildStageHTML(stage);
+  });
+  container.innerHTML = html;
+  updateOverall();
+  // open first incomplete stage automatically
+  const firstOpen = STAGES.find(s => {
+    const done = s.items.filter((_, i) => getItem(s.id, i) !== null).length;
+    return done < s.items.length;
+  });
+  if (firstOpen) {
+    const body = document.getElementById(`body-${firstOpen.id}`);
+    const chev = document.getElementById(`chev-${firstOpen.id}`);
+    if (body) { body.classList.add('open'); chev.classList.add('open'); }
+  }
+}
+
+function buildStageHTML(stage) {
+  const total = stage.items.length;
+  const done = stage.items.filter((_, i) => getItem(stage.id, i) !== null).length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  const complete = done === total;
+
+  const numClass = complete ? 'complete' : stage.color;
+  const barColor = stage.color;
+
+  const itemsHTML = stage.items.map((item, i) => buildItemHTML(stage.id, i, item)).join('');
+
+  return `
+<div class="stage-block" id="stage-${stage.id}">
+  <div class="stage-head" onclick="toggleStage(${stage.id})">
+    <div class="stage-num ${numClass}">${stage.id}</div>
+    <div class="stage-info">
+      <div class="stage-title">${stage.title}</div>
+      <div class="stage-sub">${stage.sub}</div>
+      <div class="stage-mini-bar-wrap">
+        <div class="stage-mini-bar ${barColor}" style="width:${pct}%"></div>
+      </div>
+    </div>
+    <div class="stage-count">${done}/${total}</div>
+    <div class="stage-chevron" id="chev-${stage.id}">▾</div>
+  </div>
+  <div class="stage-body" id="body-${stage.id}">
+    ${itemsHTML}
+    <div class="stage-gate"><strong>Stage gate:</strong> ${stage.gate}</div>
+  </div>
+</div>`;
+}
+
+function buildItemHTML(stageId, idx, text) {
+  const rec = getItem(stageId, idx);
+  const checked = rec !== null;
+  const checkMark = checked ? '✓' : '';
+  const sigs = rec
+    ? Object.entries(rec).map(([u, ts]) =>
+        `<span class="sig-pill ${u === currentInitials ? 'me' : ''}" title="${ts} — click to remove" onclick="removeSig(event,${stageId},${idx},'${u}')">${u}</span>`
+      ).join('')
+    : '';
+  return `
+<div class="item-row ${checked ? 'checked' : ''}" id="item-${stageId}-${idx}" onclick="itemClick(${stageId},${idx})">
+  <div class="item-check ${checked ? 'checked' : ''}">${checkMark}</div>
+  <div class="item-text">${text}</div>
+  <div class="item-sigs">${sigs}</div>
+</div>`;
+}
+
+function refreshStage(stageId) {
+  const stage = STAGES.find(s => s.id === stageId);
+  const old = document.getElementById(`stage-${stageId}`);
+  if (!old) return;
+  const wasOpen = document.getElementById(`body-${stageId}`)?.classList.contains('open');
+  old.outerHTML = buildStageHTML(stage);
+  if (wasOpen) {
+    document.getElementById(`body-${stageId}`)?.classList.add('open');
+    document.getElementById(`chev-${stageId}`)?.classList.add('open');
+  }
+  updateOverall();
+}
+
+function updateOverall() {
+  let total = 0, done = 0;
+  STAGES.forEach(s => {
+    total += s.items.length;
+    done += s.items.filter((_, i) => getItem(s.id, i) !== null).length;
+  });
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('overall-bar').style.width = pct + '%';
+  document.getElementById('overall-pct').textContent = pct + '%';
+  document.getElementById('overall-counts').textContent = `${done} of ${total} items complete`;
+}
+
+// ─────────────────────────────────────────────
+// INTERACTIONS
+// ─────────────────────────────────────────────
+function toggleStage(id) {
+  const body = document.getElementById(`body-${id}`);
+  const chev = document.getElementById(`chev-${id}`);
+  if (!body) return;
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function itemClick(stageId, idx) {
+  if (!currentProvider) { showToast('Select a provider first'); return; }
+  if (!currentInitials)  { showToast('Enter your initials first'); return; }
+  const rec = getItem(stageId, idx);
+  const text = STAGES.find(s => s.id === stageId).items[idx];
+  const alreadySigned = rec && rec[currentInitials];
+  pendingAction = { stageId, idx, text, rec, alreadySigned };
+
+  if (alreadySigned) {
+    showModal(
+      'Remove your sign-off?',
+      `Remove ${currentInitials} from "${text}"?`,
+      [
+        { label: 'Cancel',  cls: 'btn-ghost', action: closeModal },
+        { label: 'Remove',  cls: 'btn-red',   action: confirmAction },
+      ]
+    );
+  } else {
+    showModal(
+      'Sign off this item?',
+      rec
+        ? `Add ${currentInitials} to existing sign-offs on "${text}".`
+        : `Record ${currentInitials} · ${new Date().toLocaleDateString()} on "${text}".`,
+      [
+        { label: 'Cancel',   cls: 'btn-ghost', action: closeModal },
+        { label: 'Sign off', cls: 'btn-green', action: confirmAction },
+      ]
+    );
+  }
+}
+
+function removeSig(e, stageId, idx, user) {
+  e.stopPropagation();
+  if (user !== currentInitials) { showToast('You can only remove your own sign-off'); return; }
+  pendingAction = { stageId, idx, alreadySigned: true };
+  const text = STAGES.find(s => s.id === stageId).items[idx];
+  showModal(
+    'Remove your sign-off?',
+    `Remove ${currentInitials} from "${text}"?`,
+    [
+      { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
+      { label: 'Remove', cls: 'btn-red',   action: confirmAction },
+    ]
+  );
+}
+
+async function confirmAction() {
+  if (!pendingAction) return;
+  const { stageId, idx, alreadySigned } = pendingAction;
+  const key = itemKey(stageId, idx);
+
+  if (alreadySigned) {
+    if (checkData[key]) {
+      delete checkData[key][currentInitials];
+      if (Object.keys(checkData[key]).length === 0) delete checkData[key];
+    }
+    showToast(`${currentInitials} removed`);
+  } else {
+    const ts = new Date().toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+    checkData[key] = { ...(checkData[key] || {}), [currentInitials]: ts };
+    showToast(`Signed off — ${currentInitials}`);
+  }
+
+  closeModal();
+  refreshStage(stageId);
+  debouncedSave();
+}
+
+// ─────────────────────────────────────────────
+// MODAL
+// ─────────────────────────────────────────────
+function showModal(title, body, buttons) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').textContent = body;
+  const acts = document.getElementById('modal-actions');
+  acts.innerHTML = '';
+  buttons.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = `btn ${b.cls}`;
+    btn.textContent = b.label;
+    btn.onclick = b.action;
+    acts.appendChild(btn);
+  });
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  pendingAction = null;
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ─────────────────────────────────────────────
+// PROVIDER SELECT + INITIALS
+// ─────────────────────────────────────────────
+function populateProviders() {
+  const sel = document.getElementById('provider-select');
+  PROVIDERS.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.label;
+    sel.appendChild(opt);
+  });
+  // restore last used
+  const saved = localStorage.getItem('rr_last_provider');
+  if (saved) { sel.value = saved; handleProviderChange(saved); }
+}
+
+document.getElementById('provider-select').addEventListener('change', function() {
+  handleProviderChange(this.value);
+});
+
+async function handleProviderChange(id) {
+  currentProvider = id;
+  checkData = {};
+  if (id) {
+    localStorage.setItem('rr_last_provider', id);
+    await loadFromAPI(id);
+  }
+  buildChecklist();
+}
+
+document.getElementById('initials-input').addEventListener('input', function() {
+  currentInitials = this.value.toUpperCase().trim();
+  this.value = currentInitials;
+  document.getElementById('initials-avatar').textContent = currentInitials || '—';
+  localStorage.setItem('rr_initials', currentInitials);
+  buildChecklist();
+});
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+(function init() {
+  const savedInitials = localStorage.getItem('rr_initials');
+  if (savedInitials) {
+    currentInitials = savedInitials;
+    document.getElementById('initials-input').value = savedInitials;
+    document.getElementById('initials-avatar').textContent = savedInitials;
+  }
+  populateProviders();
+})();
+</script>
+</body>
+</html>
