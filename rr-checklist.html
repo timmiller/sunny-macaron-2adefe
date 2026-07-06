@@ -1283,6 +1283,7 @@ function showEditProvider() {
 }
 
 async function saveEditProvider() {
+
   const num  = document.getElementById('edit-rr-num')?.value.trim().padStart(3,'0');
   const last = document.getElementById('edit-last-name')?.value.trim();
   const city = document.getElementById('edit-city')?.value.trim();
@@ -1324,6 +1325,8 @@ async function deleteProvider() {
   buildChecklist();
   showToast('Provider deleted');
 }
+
+async function submitNewProvider() {
   const num  = document.getElementById('new-rr-num')?.value.trim().padStart(3,'0');
   const last = document.getElementById('new-last-name')?.value.trim();
   const city = document.getElementById('new-city')?.value.trim();
@@ -1340,7 +1343,6 @@ async function deleteProvider() {
   await saveProviders();
   populateProviderSelect();
   closeModal();
-  // auto-select the new provider
   const sel = document.getElementById('provider-select');
   sel.value = id;
   handleProviderChange(id);
