@@ -411,16 +411,28 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* ── NOTES & QUESTIONS ICONS ── */
+  /* Notes icon states */
   .icon-btn {
     width: 26px; height: 26px; border-radius: 50%;
-    background: transparent; border: 1.5px solid var(--border-strong);
-    color: var(--ink-3); font-size: 13px;
+    background: transparent; border: 1.5px solid var(--border);
+    color: var(--border-strong); font-size: 13px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all 0.15s; flex-shrink: 0; position: relative;
+    opacity: 0.35;
   }
-  .icon-btn:hover { background: var(--surface-2); border-color: var(--ink-3); color: var(--ink); }
-  .icon-btn.has-content { border-color: var(--blue-mid); color: var(--blue); background: var(--blue-bg); }
-  .icon-btn.all-answered { border-color: var(--border); color: var(--border-strong); background: transparent; opacity: 0.5; }
+  .icon-btn:hover { opacity: 1; background: var(--surface-2); border-color: var(--ink-3); color: var(--ink); }
+  /* Notes: has notes */
+  .icon-btn.has-content { border-color: var(--blue-mid); color: var(--blue); background: var(--blue-bg); opacity: 1; }
+  .icon-btn.has-content:hover { background: #d6e8f8; }
+
+  /* Question states */
+  .icon-btn.q-empty   { opacity: 0.25; pointer-events: none; }
+  .icon-btn.q-empty:hover { opacity: 0.25; }
+  .icon-btn.q-open    { border-color: var(--gold-mid); color: var(--gold); background: var(--gold-bg); opacity: 1; pointer-events: auto; }
+  .icon-btn.q-open:hover { background: #f5e8c0; }
+  .icon-btn.q-done    { border-color: var(--green-mid); color: var(--green); background: var(--green-bg); opacity: 1; pointer-events: auto; }
+  .icon-btn.q-done:hover { background: #d0f0df; }
+
   .icon-btn .icon-badge {
     position: absolute; top: -5px; right: -5px;
     min-width: 14px; height: 14px; border-radius: 7px;
@@ -428,7 +440,8 @@
     font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 700;
     display: flex; align-items: center; justify-content: center; padding: 0 3px;
   }
-  .icon-btn.all-answered .icon-badge { background: var(--border-strong); }
+  .icon-btn.q-open .icon-badge { background: var(--gold-mid); }
+  .icon-btn.q-done .icon-badge { background: var(--green-mid); }
 
   /* ── TOOLTIP ── */
   .icon-tooltip-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
@@ -1192,25 +1205,29 @@ function buildItemHTML(stageId, idx, text) {
     ? notes.slice(-3).reverse().map(n => `<div class="tooltip-entry"><div class="tooltip-meta">${n.initials} · ${n.ts}</div><div class="tooltip-text">${n.text.substring(0,80)}${n.text.length>80?'…':''}</div></div>`).join('')
     : '<div class="tooltip-empty">No notes yet</div>';
   const notesIconHTML = `<div class="icon-tooltip-wrap">
-    <button class="icon-btn ${noteCount?'has-content':''}" onclick="showNotesModal(event,${stageId},${idx})">
-      📋${noteCount?`<span class="icon-badge">${noteCount}</span>`:''}
+    <button class="icon-btn ${noteCount ? 'has-content' : ''}" onclick="showNotesModal(event,${stageId},${idx})" title="Notes">
+      📋${noteCount ? `<span class="icon-badge">${noteCount}</span>` : ''}
     </button>
-    <div class="icon-tooltip">${noteTooltip}</div>
+    ${noteCount ? `<div class="icon-tooltip">${noteTooltip}</div>` : ''}
   </div>`;
 
-  // Questions icon
+  // Questions icon — 3 states: empty, open, all-answered
   const questions = getItemQuestions(stageId, idx);
-  const qTotal = questions.length;
-  const qOpen = questions.filter(q=>!q.answered).length;
+  const qTotal    = questions.length;
+  const qOpen     = questions.filter(q => !q.answered).length;
   const allAnswered = qTotal > 0 && qOpen === 0;
-  const qTooltip = qTotal
-    ? questions.slice(0,4).map(q => `<div class="tooltip-entry"><div class="${q.answered?'tooltip-q-answered':'tooltip-q-open'}">${q.answered?'✓ ':''} ${q.text.substring(0,70)}${q.text.length>70?'…':''}</div></div>`).join('')
-    : '<div class="tooltip-empty">No questions yet</div>';
+  const qClass    = qTotal === 0 ? 'q-empty' : (allAnswered ? 'q-done' : 'q-open');
+  const qEmoji    = allAnswered ? '✓' : '?';
+  const qTooltip  = qTotal
+    ? questions.slice(0, 4).map(q =>
+        `<div class="tooltip-entry"><div class="${q.answered ? 'tooltip-q-answered' : 'tooltip-q-open'}">${q.answered ? '✓ ' : ''}${q.text.substring(0,70)}${q.text.length > 70 ? '…' : ''}</div></div>`
+      ).join('')
+    : '';
   const questionsIconHTML = `<div class="icon-tooltip-wrap">
-    <button class="icon-btn ${qTotal?(allAnswered?'all-answered':'has-content'):''}" onclick="showQuestionsModal(event,${stageId},${idx})">
-      ❓${qTotal?`<span class="icon-badge">${qTotal}</span>`:''}
+    <button class="icon-btn ${qClass}" onclick="showQuestionsModal(event,${stageId},${idx})" style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;">
+      ${qEmoji}${qTotal ? `<span class="icon-badge">${qTotal}</span>` : ''}
     </button>
-    <div class="icon-tooltip">${qTooltip}</div>
+    ${qTooltip ? `<div class="icon-tooltip">${qTooltip}</div>` : ''}
   </div>`;
 
   return `
