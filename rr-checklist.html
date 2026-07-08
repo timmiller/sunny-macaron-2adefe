@@ -337,6 +337,34 @@
   .assignee-chip-remove:hover { color: var(--red); }
   .assign-empty { font-size: 12px; color: var(--ink-3); font-style: italic; }
 
+  /* ── DIRECTORY CHIPS ── */
+  .dir-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dir-chip {
+    display: flex; align-items: center; gap: 5px;
+    padding: 4px 8px 4px 4px; border-radius: 20px;
+    border: 1.5px solid var(--border-strong); background: var(--surface-1);
+    cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+  }
+  .dir-chip:hover { border-color: var(--blue-mid); background: var(--blue-bg); }
+  .dir-chip.dir-chip-added { border-color: var(--green-mid); background: var(--green-bg); }
+  .dir-chip-avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid transparent; flex-shrink: 0;
+  }
+  .dir-chip-avatar.role-provider { background: var(--role-provider-bg); color: var(--role-provider-text); border-color: var(--role-provider-border); }
+  .dir-chip-avatar.role-acct     { background: var(--role-acct-bg);     color: var(--role-acct-text);     border-color: var(--role-acct-border); }
+  .dir-chip-avatar.role-sales    { background: var(--role-sales-bg);    color: var(--role-sales-text);    border-color: var(--role-sales-border); }
+  .dir-chip-avatar.role-np       { background: var(--role-np-bg);       color: var(--role-np-text);       border-color: var(--role-np-border); }
+  .dir-chip-avatar.role-support  { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .dir-chip-avatar.role-rrops    { background: var(--role-rrops-bg);    color: var(--role-rrops-text);    border-color: var(--role-rrops-border); }
+  .dir-chip-avatar.role-gsc      { background: #345691; color: white; border-color: #1E3A6E; }
+  .dir-chip-avatar.role-hub      { background: #854F0B; color: white; border-color: #5C3507; }
+  .dir-chip-avatar.role-auto     { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .dir-chip-name { font-size: 11px; font-weight: 500; color: var(--ink-2); }
+  .dir-chip.dir-chip-added .dir-chip-name { color: var(--green); }
+
   /* ── ROLE SELECT COLORS ── */
   .role-badge {
     display: inline-block; font-size: 10px; font-weight: 600;
@@ -428,7 +456,7 @@
   /* ── WHIMSICAL MODAL ── */
   .whim-modal {
     background: var(--surface); border-radius: 14px;
-    width: 420px; max-width: 95vw; max-height: 82vh;
+    width: 520px; max-width: 96vw; max-height: 82vh;
     box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.06);
     display: flex; flex-direction: column; overflow: hidden;
   }
@@ -631,12 +659,15 @@ const JOURNEY_MAP_URL = 'https://stem-cell-video.visual-edge.workers.dev/journey
 // ROLES
 // ─────────────────────────────────────────────
 const ROLES = [
-  { id: 'provider', label: 'Provider / Owner',  cls: 'role-provider' },
-  { id: 'acct',     label: 'Account Rep',        cls: 'role-acct'     },
-  { id: 'sales',    label: 'Sales Rep',           cls: 'role-sales'    },
-  { id: 'np',       label: 'NP / PA',             cls: 'role-np'       },
-  { id: 'support',  label: 'Support Staff',       cls: 'role-support'  },
-  { id: 'rrops',    label: 'RR Internal Ops',     cls: 'role-rrops'    },
+  { id: 'provider', label: 'Provider / Owner',     cls: 'role-provider' },
+  { id: 'acct',     label: 'Account Rep',           cls: 'role-acct'     },
+  { id: 'sales',    label: 'Sales Rep',             cls: 'role-sales'    },
+  { id: 'np',       label: 'NP / PA',               cls: 'role-np'       },
+  { id: 'support',  label: 'Support Staff',         cls: 'role-support'  },
+  { id: 'rrops',    label: 'RR Internal Ops',       cls: 'role-rrops'    },
+  { id: 'gsc',      label: 'GSC / RR Portal',       cls: 'role-gsc'      },
+  { id: 'hub',      label: 'Leading Response Hub',  cls: 'role-hub'      },
+  { id: 'auto',     label: 'AI / Auto',             cls: 'role-auto'     },
 ];
 function roleById(id) { return ROLES.find(r => r.id === id) || ROLES[0]; }
 function initialsFrom(name) {
@@ -954,6 +985,32 @@ let saveTimer     = null;
 // Temporary assignee list being edited in the assign modal
 let pendingAssignees = [];
 
+// ── PEOPLE DIRECTORY (per provider, stored in KV under __dir__ key) ──
+let peopleDirectory = []; // [{name, role, initials}, ...]
+
+function dirKey() { return '__dir__'; }
+
+function loadDirectory() {
+  const raw = checkData[dirKey()];
+  peopleDirectory = raw?.people || [];
+}
+
+function saveDirectory() {
+  checkData[dirKey()] = { people: peopleDirectory };
+}
+
+function addToDirectory(person) {
+  // Add if not already present (match by name)
+  if (!peopleDirectory.find(p => p.name.toLowerCase() === person.name.toLowerCase())) {
+    peopleDirectory.push({ name: person.name, role: person.role, initials: person.initials });
+    saveDirectory();
+  }
+}
+
+function getAllDirectoryPeople() {
+  return [...peopleDirectory].sort((a,b) => a.name.localeCompare(b.name));
+}
+
 function itemKey(sId, idx) { return `s${sId}_i${idx}`; }
 function getItemData(sId, idx) { return checkData[itemKey(sId, idx)] || null; }
 function getSigs(sId, idx)  { return getItemData(sId, idx)?.sigs || null; }
@@ -973,6 +1030,7 @@ async function loadFromAPI(providerId) {
     if (!r.ok) throw new Error(r.status);
     const json = await r.json();
     checkData = migrateLegacyData(json.data || {});
+    loadDirectory();
     setSyncStatus('ok', 'Synced');
   } catch(e) {
     setSyncStatus('error', 'Offline — using local');
@@ -1016,6 +1074,7 @@ function loadFromLocal(providerId) {
   try {
     const raw = localStorage.getItem(`rr_checklist_${providerId}`);
     checkData = migrateLegacyData(raw ? JSON.parse(raw) : {});
+    loadDirectory();
   } catch(e) { checkData = {}; }
 }
 
@@ -1284,12 +1343,28 @@ function showAssignModal(e, stageId, idx) {
 
   titleEl.textContent = 'Assign people';
 
+  const dirPeople = getAllDirectoryPeople();
+  const dirChipsHTML = dirPeople.length
+    ? `<div style="font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">From directory</div>
+       <div class="dir-chips" id="dir-chips">
+         ${dirPeople.map(p => {
+           const role = roleById(p.role);
+           const alreadyAdded = pendingAssignees.some(a => a.name.toLowerCase() === p.name.toLowerCase());
+           return `<button class="dir-chip ${alreadyAdded?'dir-chip-added':''}" onclick="addFromDirectory('${p.name.replace(/'/g,"\'")}','${p.role}','${p.initials}')" title="${role.label}">
+             <span class="dir-chip-avatar ${role.cls}">${p.initials}</span>
+             <span class="dir-chip-name">${p.name.split(' ')[0]}</span>
+           </button>`;
+         }).join('')}
+       </div>`
+    : '';
+
   bodyEl.innerHTML = `
-<p style="font-size:12px;color:var(--ink-3);margin-bottom:14px;">${text}</p>
+<p style="font-size:12px;color:var(--ink-3);margin-bottom:12px;">${text}</p>
 <div class="assign-form">
+  ${dirChipsHTML ? `<div style="margin-bottom:12px;">${dirChipsHTML}</div>` : ''}
   <div id="assignee-list-wrap"></div>
   <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;">
-    <div style="font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Add person</div>
+    <div style="font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Add new person</div>
     <div class="assign-form-row">
       <label>Role</label>
       <select id="assign-role">
@@ -1368,6 +1443,34 @@ function addAssignee() {
 function removeAssignee(idx) {
   pendingAssignees.splice(idx, 1);
   renderAssigneeList();
+  refreshDirChips();
+}
+
+function addFromDirectory(name, roleId, initials) {
+  if (pendingAssignees.find(a => a.name.toLowerCase() === name.toLowerCase())) {
+    // already added — remove instead (toggle)
+    const i = pendingAssignees.findIndex(a => a.name.toLowerCase() === name.toLowerCase());
+    pendingAssignees.splice(i, 1);
+  } else {
+    if (pendingAssignees.length >= 3) { showToast('Max 3 people per task'); return; }
+    pendingAssignees.push({ name, role: roleId, initials });
+  }
+  renderAssigneeList();
+  refreshDirChips();
+}
+
+function refreshDirChips() {
+  const wrap = document.getElementById('dir-chips');
+  if (!wrap) return;
+  const dirPeople = getAllDirectoryPeople();
+  wrap.innerHTML = dirPeople.map(p => {
+    const role = roleById(p.role);
+    const alreadyAdded = pendingAssignees.some(a => a.name.toLowerCase() === p.name.toLowerCase());
+    return `<button class="dir-chip ${alreadyAdded?'dir-chip-added':''}" onclick="addFromDirectory('${p.name.replace(/'/g,"\'")}','${p.role}','${p.initials}')" title="${role.label}">
+      <span class="dir-chip-avatar ${role.cls}">${p.initials}</span>
+      <span class="dir-chip-name">${p.name.split(' ')[0]}</span>
+    </button>`;
+  }).join('');
 }
 
 function confirmAssign() {
@@ -1376,6 +1479,8 @@ function confirmAssign() {
   const key = itemKey(stageId, idx);
   const existing = checkData[key] || { sigs: {}, assigned: [] };
   existing.assigned = pendingAssignees;
+  // Auto-add any new people to the directory
+  pendingAssignees.forEach(p => addToDirectory(p));
   if (Object.keys(existing.sigs).length === 0 && existing.assigned.length === 0) {
     delete checkData[key];
   } else {
@@ -1503,6 +1608,7 @@ document.getElementById('provider-select').addEventListener('change', function()
 async function handleProviderChange(id) {
   currentProvider = id;
   checkData = {};
+  peopleDirectory = [];
   document.getElementById('edit-provider-btn')?.classList.toggle('visible', !!id);
   if (id) {
     localStorage.setItem('rr_last_provider', id);
@@ -1797,16 +1903,18 @@ let activeFilters = new Set(); // set of person names
 let filterOpen = false;
 
 function getAllAssignedPeople() {
-  // Returns array of unique {name, role, initials} across all items for current provider
+  // Merge directory + any assigned-on-tasks people
   const seen = new Set();
   const people = [];
+  // Start with directory
+  for (const p of peopleDirectory) {
+    if (!seen.has(p.name)) { seen.add(p.name); people.push(p); }
+  }
+  // Add anyone assigned to tasks but not in directory
   for (const val of Object.values(checkData)) {
     if (!val?.assigned) continue;
     for (const a of val.assigned) {
-      if (!seen.has(a.name)) {
-        seen.add(a.name);
-        people.push(a);
-      }
+      if (!seen.has(a.name)) { seen.add(a.name); people.push(a); }
     }
   }
   return people.sort((a, b) => a.name.localeCompare(b.name));
