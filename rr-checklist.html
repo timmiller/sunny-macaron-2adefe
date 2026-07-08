@@ -180,7 +180,7 @@
   /* ── COLUMN HEADERS ── */
   .col-headers {
     display: grid;
-    grid-template-columns: 22px 1fr 130px 110px 32px;
+    grid-template-columns: 22px 1fr 28px 120px 28px 100px 32px;
     gap: 0 8px;
     padding: 5px 16px;
     background: var(--surface-2);
@@ -195,7 +195,7 @@
   /* ── ITEM ROW ── */
   .item-row {
     display: grid;
-    grid-template-columns: 22px 1fr 130px 110px 32px;
+    grid-template-columns: 22px 1fr 28px 120px 28px 100px 32px;
     gap: 0 8px;
     align-items: center;
     padding: 8px 16px;
@@ -380,6 +380,109 @@
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ── NOTES & QUESTIONS ICONS ── */
+  .icon-btn {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: transparent; border: 1.5px solid var(--border-strong);
+    color: var(--ink-3); font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.15s; flex-shrink: 0; position: relative;
+  }
+  .icon-btn:hover { background: var(--surface-2); border-color: var(--ink-3); color: var(--ink); }
+  .icon-btn.has-content { border-color: var(--blue-mid); color: var(--blue); background: var(--blue-bg); }
+  .icon-btn.all-answered { border-color: var(--border); color: var(--border-strong); background: transparent; opacity: 0.5; }
+  .icon-btn .icon-badge {
+    position: absolute; top: -5px; right: -5px;
+    min-width: 14px; height: 14px; border-radius: 7px;
+    background: var(--blue-mid); color: white;
+    font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; padding: 0 3px;
+  }
+  .icon-btn.all-answered .icon-badge { background: var(--border-strong); }
+
+  /* ── TOOLTIP ── */
+  .icon-tooltip-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .icon-tooltip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: #1a2030; color: rgba(255,255,255,0.92);
+    border-radius: 8px; padding: 10px 12px;
+    min-width: 200px; max-width: 280px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    font-size: 11.5px; line-height: 1.5;
+    pointer-events: none; opacity: 0; transition: opacity 0.15s;
+    z-index: 99; white-space: normal; text-align: left;
+  }
+  .icon-tooltip::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: #1a2030;
+  }
+  .icon-tooltip-wrap:hover .icon-tooltip { opacity: 1; }
+  .tooltip-entry { margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .tooltip-entry:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .tooltip-meta { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+  .tooltip-text { color: rgba(255,255,255,0.9); }
+  .tooltip-empty { color: rgba(255,255,255,0.4); font-style: italic; font-size: 11px; }
+  .tooltip-q-open { color: #93c5fd; }
+  .tooltip-q-answered { color: rgba(255,255,255,0.3); text-decoration: line-through; }
+
+  /* ── WHIMSICAL MODAL ── */
+  .whim-modal {
+    background: var(--surface); border-radius: 14px;
+    width: 420px; max-width: 95vw; max-height: 82vh;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .whim-header {
+    padding: 16px 18px 12px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 10px; flex-shrink: 0;
+  }
+  .whim-header-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .whim-header-icon.notes     { background: var(--blue-bg); }
+  .whim-header-icon.questions { background: var(--gold-bg); }
+  .whim-header-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .whim-header-sub   { font-size: 11px; color: var(--ink-3); line-height: 1.4; }
+  .whim-close { margin-left: auto; background: none; border: none; color: var(--ink-3); font-size: 20px; cursor: pointer; padding: 0 2px; line-height: 1; flex-shrink: 0; }
+  .whim-close:hover { color: var(--ink); }
+  .whim-feed { flex: 1; overflow-y: auto; padding: 12px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .whim-entry { display: flex; gap: 10px; align-items: flex-start; }
+  .whim-entry-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--blue-bg); color: var(--blue);
+    font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; border: 1.5px solid var(--blue-mid);
+  }
+  .whim-entry-body { flex: 1; min-width: 0; }
+  .whim-entry-meta { font-size: 10px; color: var(--ink-3); margin-bottom: 4px; display: flex; gap: 6px; }
+  .whim-entry-name { font-weight: 600; color: var(--ink-2); }
+  .whim-entry-text { font-size: 12.5px; color: var(--ink); line-height: 1.5; background: var(--surface-1); border-radius: 8px; padding: 8px 10px; border: 1px solid var(--border); }
+  .whim-q-entry { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; background: var(--surface-1); border-radius: 8px; border: 1px solid var(--border); }
+  .whim-q-entry.answered { opacity: 0.45; }
+  .whim-q-check {
+    width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; margin-top: 2px; transition: all 0.15s; font-size: 9px; color: transparent;
+  }
+  .whim-q-check.checked { background: var(--green-mid); border-color: var(--green-mid); color: white; }
+  .whim-q-body { flex: 1; min-width: 0; }
+  .whim-q-text { font-size: 12.5px; color: var(--ink); line-height: 1.4; }
+  .whim-q-meta { font-size: 10px; color: var(--ink-3); margin-top: 3px; }
+  .whim-q-answered-label { font-size: 10px; color: var(--green); margin-top: 2px; }
+  .whim-section-label { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 0 2px; }
+  .whim-composer { padding: 12px 18px 14px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+  .whim-composer textarea {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink);
+    background: var(--surface-1); border: 1.5px solid var(--border-strong); border-radius: 8px;
+    padding: 8px 10px; resize: none; outline: none; transition: border-color 0.15s; line-height: 1.5; min-height: 64px;
+  }
+  .whim-composer textarea:focus { border-color: var(--blue-mid); background: var(--surface); }
+  .whim-composer-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .whim-empty { text-align: center; padding: 20px 16px; color: var(--ink-3); font-size: 12px; font-style: italic; }
+
   /* ── FILTER DROPDOWN ── */
   .filter-trigger {
     font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
@@ -437,7 +540,7 @@
     .progress-strip { padding: 10px 16px; }
     .main { padding: 16px 12px 48px; }
     select { min-width: 160px; }
-    .item-row, .col-headers { grid-template-columns: 22px 1fr 90px 80px 28px; }
+    .item-row, .col-headers { grid-template-columns: 22px 1fr 24px 80px 24px 70px 28px; }
   }
 </style>
 </head>
@@ -883,8 +986,10 @@ function migrateLegacyData(raw) {
   for (const [k, v] of Object.entries(raw)) {
     if (v && typeof v === 'object' && !v.sigs && !v.assigned) {
       // old format: { "TM": "date", ... }
-      out[k] = { sigs: v, assigned: [] };
+      out[k] = { sigs: v, assigned: [], notes: [], questions: [] };
     } else {
+      if (v && !v.notes)     v.notes = [];
+      if (v && !v.questions) v.questions = [];
       out[k] = v;
     }
   }
@@ -986,7 +1091,9 @@ function buildStageHTML(stage) {
     <div class="col-headers">
       <span></span>
       <span>Task</span>
+      <span></span>
       <span>Assigned</span>
+      <span></span>
       <span>Completed</span>
       <span></span>
     </div>
@@ -1016,11 +1123,41 @@ function buildItemHTML(stageId, idx, text) {
       ).join('')
     : '';
 
+  // Notes icon
+  const notes = getItemNotes(stageId, idx);
+  const noteCount = notes.length;
+  const noteTooltip = noteCount
+    ? notes.slice(-3).reverse().map(n => `<div class="tooltip-entry"><div class="tooltip-meta">${n.initials} · ${n.ts}</div><div class="tooltip-text">${n.text.substring(0,80)}${n.text.length>80?'…':''}</div></div>`).join('')
+    : '<div class="tooltip-empty">No notes yet</div>';
+  const notesIconHTML = `<div class="icon-tooltip-wrap">
+    <button class="icon-btn ${noteCount?'has-content':''}" onclick="showNotesModal(event,${stageId},${idx})">
+      📋${noteCount?`<span class="icon-badge">${noteCount}</span>`:''}
+    </button>
+    <div class="icon-tooltip">${noteTooltip}</div>
+  </div>`;
+
+  // Questions icon
+  const questions = getItemQuestions(stageId, idx);
+  const qTotal = questions.length;
+  const qOpen = questions.filter(q=>!q.answered).length;
+  const allAnswered = qTotal > 0 && qOpen === 0;
+  const qTooltip = qTotal
+    ? questions.slice(0,4).map(q => `<div class="tooltip-entry"><div class="${q.answered?'tooltip-q-answered':'tooltip-q-open'}">${q.answered?'✓ ':''} ${q.text.substring(0,70)}${q.text.length>70?'…':''}</div></div>`).join('')
+    : '<div class="tooltip-empty">No questions yet</div>';
+  const questionsIconHTML = `<div class="icon-tooltip-wrap">
+    <button class="icon-btn ${qTotal?(allAnswered?'all-answered':'has-content'):''}" onclick="showQuestionsModal(event,${stageId},${idx})">
+      ❓${qTotal?`<span class="icon-badge">${qTotal}</span>`:''}
+    </button>
+    <div class="icon-tooltip">${qTooltip}</div>
+  </div>`;
+
   return `
 <div class="item-row ${checked ? 'checked' : ''}" id="item-${stageId}-${idx}">
   <div class="item-check ${checked ? 'checked' : ''}" onclick="itemClick(${stageId},${idx})">${checked ? '✓' : ''}</div>
   <div class="item-text" onclick="itemClick(${stageId},${idx})">${text}</div>
+  ${notesIconHTML}
   <div class="item-assigned">${avatarsHTML}</div>
+  ${questionsIconHTML}
   <div class="item-sigs">${sigsHTML}</div>
   <button class="assign-btn" onclick="showAssignModal(event,${stageId},${idx})" title="Assign / edit people">＋</button>
 </div>`;
@@ -1493,6 +1630,164 @@ async function submitNewProvider() {
   document.getElementById('provider-select').value = id;
   handleProviderChange(id);
   showToast(`${label} added`);
+}
+
+// ─────────────────────────────────────────────
+// NOTES & QUESTIONS
+// ─────────────────────────────────────────────
+function getItemNotes(sId, idx)     { return getItemData(sId, idx)?.notes     || []; }
+function getItemQuestions(sId, idx) { return getItemData(sId, idx)?.questions  || []; }
+function tsNow() {
+  return new Date().toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+}
+
+function showNotesModal(e, stageId, idx) {
+  e.stopPropagation();
+  if (!currentProvider) { showToast('Select a provider first'); return; }
+  pendingAction = { type: 'notes', stageId, idx };
+  document.getElementById('modal-title').style.display = 'none';
+  document.getElementById('modal-actions').innerHTML = '';
+  const text = STAGES.find(s => s.id === stageId).items[idx];
+  document.getElementById('modal-body').innerHTML = buildNotesHTML(stageId, idx, text);
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => {
+    const ta = document.getElementById('note-textarea');
+    ta?.focus();
+    ta?.addEventListener('keydown', ev => { if (ev.key==='Enter'&&(ev.metaKey||ev.ctrlKey)){ev.preventDefault();submitNote(stageId,idx);} });
+  }, 50);
+}
+
+function buildNotesHTML(stageId, idx, taskText) {
+  const notes = getItemNotes(stageId, idx);
+  const feedHTML = notes.length
+    ? [...notes].reverse().map(n =>
+        `<div class="whim-entry">
+          <div class="whim-entry-avatar">${n.initials}</div>
+          <div class="whim-entry-body">
+            <div class="whim-entry-meta"><span class="whim-entry-name">${n.initials}</span><span>${n.ts}</span></div>
+            <div class="whim-entry-text">${n.text.replace(/\n/g,'<br>')}</div>
+          </div>
+        </div>`).join('')
+    : '<div class="whim-empty">No notes yet — add the first one.</div>';
+  return `<div class="whim-modal">
+  <div class="whim-header">
+    <div class="whim-header-icon notes">📋</div>
+    <div><div class="whim-header-title">Notes</div><div class="whim-header-sub">${taskText.substring(0,60)}${taskText.length>60?'…':''}</div></div>
+    <button class="whim-close" onclick="closeWhimModal()">×</button>
+  </div>
+  <div class="whim-feed">${feedHTML}</div>
+  <div class="whim-composer">
+    <textarea id="note-textarea" placeholder="Add a note… (Cmd/Ctrl+Enter to save)"></textarea>
+    <div class="whim-composer-actions">
+      <button class="btn btn-ghost" onclick="closeWhimModal()">Cancel</button>
+      <button class="btn btn-green" onclick="submitNote(${stageId},${idx})">Add note</button>
+    </div>
+  </div>
+</div>`;
+}
+
+function submitNote(stageId, idx) {
+  if (!currentInitials) { showToast('Enter your initials first'); return; }
+  const text = document.getElementById('note-textarea')?.value.trim();
+  if (!text) { showToast('Type a note first'); return; }
+  const key = itemKey(stageId, idx);
+  const ex = checkData[key] || { sigs:{}, assigned:[], notes:[], questions:[] };
+  if (!ex.notes) ex.notes = [];
+  ex.notes.push({ initials: currentInitials, ts: tsNow(), text });
+  checkData[key] = ex;
+  closeWhimModal();
+  refreshStage(stageId);
+  debouncedSave();
+  showToast('Note added');
+}
+
+function showQuestionsModal(e, stageId, idx) {
+  e.stopPropagation();
+  if (!currentProvider) { showToast('Select a provider first'); return; }
+  pendingAction = { type: 'questions', stageId, idx };
+  document.getElementById('modal-title').style.display = 'none';
+  document.getElementById('modal-actions').innerHTML = '';
+  const text = STAGES.find(s => s.id === stageId).items[idx];
+  document.getElementById('modal-body').innerHTML = buildQuestionsHTML(stageId, idx, text);
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => {
+    const ta = document.getElementById('q-textarea');
+    ta?.focus();
+    ta?.addEventListener('keydown', ev => { if (ev.key==='Enter'&&(ev.metaKey||ev.ctrlKey)){ev.preventDefault();submitQuestion(stageId,idx);} });
+  }, 50);
+}
+
+function buildQuestionsHTML(stageId, idx, taskText) {
+  const questions = getItemQuestions(stageId, idx);
+  const open     = questions.filter(q => !q.answered);
+  const answered = questions.filter(q =>  q.answered);
+
+  const renderQ = (q, qIdx) => `
+    <div class="whim-q-entry ${q.answered?'answered':''}">
+      <div class="whim-q-check ${q.answered?'checked':''}" onclick="toggleQuestion(${stageId},${idx},${qIdx})">${q.answered?'✓':''}</div>
+      <div class="whim-q-body">
+        <div class="whim-q-text">${q.text}</div>
+        <div class="whim-q-meta">${q.initials} · ${q.ts}</div>
+        ${q.answered && q.answeredBy ? `<div class="whim-q-answered-label">✓ Answered by ${q.answeredBy} · ${q.answeredTs}</div>` : ''}
+      </div>
+    </div>`;
+
+  const emptyHTML = !questions.length ? '<div class="whim-empty">No questions yet — ask one below.</div>' : '';
+  const openHTML  = open.map(q     => renderQ(q, questions.indexOf(q))).join('');
+  const divHTML   = open.length && answered.length ? '<div class="whim-section-label" style="margin-top:4px;">Answered</div>' : '';
+  const answHTML  = answered.map(q => renderQ(q, questions.indexOf(q))).join('');
+
+  return `<div class="whim-modal">
+  <div class="whim-header">
+    <div class="whim-header-icon questions">❓</div>
+    <div><div class="whim-header-title">Questions</div><div class="whim-header-sub">${taskText.substring(0,60)}${taskText.length>60?'…':''}</div></div>
+    <button class="whim-close" onclick="closeWhimModal()">×</button>
+  </div>
+  <div class="whim-feed">${emptyHTML}${openHTML}${divHTML}${answHTML}</div>
+  <div class="whim-composer">
+    <textarea id="q-textarea" placeholder="Ask a question… (Cmd/Ctrl+Enter to post)"></textarea>
+    <div class="whim-composer-actions">
+      <button class="btn btn-ghost" onclick="closeWhimModal()">Cancel</button>
+      <button class="btn btn-green" onclick="submitQuestion(${stageId},${idx})">Ask</button>
+    </div>
+  </div>
+</div>`;
+}
+
+function submitQuestion(stageId, idx) {
+  if (!currentInitials) { showToast('Enter your initials first'); return; }
+  const text = document.getElementById('q-textarea')?.value.trim();
+  if (!text) { showToast('Type a question first'); return; }
+  const key = itemKey(stageId, idx);
+  const ex = checkData[key] || { sigs:{}, assigned:[], notes:[], questions:[] };
+  if (!ex.questions) ex.questions = [];
+  ex.questions.push({ initials: currentInitials, ts: tsNow(), text, answered: false });
+  checkData[key] = ex;
+  closeWhimModal();
+  refreshStage(stageId);
+  debouncedSave();
+  showToast('Question posted');
+}
+
+function toggleQuestion(stageId, idx, qIdx) {
+  if (!currentInitials) { showToast('Enter your initials first'); return; }
+  const key = itemKey(stageId, idx);
+  const ex  = checkData[key];
+  if (!ex?.questions?.[qIdx]) return;
+  const q = ex.questions[qIdx];
+  q.answered = !q.answered;
+  if (q.answered) { q.answeredBy = currentInitials; q.answeredTs = tsNow(); }
+  else { delete q.answeredBy; delete q.answeredTs; }
+  checkData[key] = ex;
+  const taskText = STAGES.find(s => s.id === stageId).items[idx];
+  document.getElementById('modal-body').innerHTML = buildQuestionsHTML(stageId, idx, taskText);
+  refreshStage(stageId);
+  debouncedSave();
+}
+
+function closeWhimModal() {
+  document.getElementById('modal-title').style.display = '';
+  closeModal();
 }
 
 // ─────────────────────────────────────────────
