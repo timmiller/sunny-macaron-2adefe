@@ -42,6 +42,16 @@
     font-size: 15px;
   }
 
+  /* ── ROLE COLORS ── */
+  :root {
+    --role-provider-bg:  #E6F1FB; --role-provider-border: #185FA5; --role-provider-text: #0C447C;
+    --role-acct-bg:      #EAF3DE; --role-acct-border:     #3B6D11; --role-acct-text:     #27500A;
+    --role-sales-bg:     #FAEEDA; --role-sales-border:    #854F0B; --role-sales-text:    #633806;
+    --role-np-bg:        #E1F5EE; --role-np-border:       #0F6E56; --role-np-text:       #085041;
+    --role-support-bg:   #F3F0FB; --role-support-border:  #534AB7; --role-support-text:  #3C3489;
+    --role-rrops-bg:     #FBEAF0; --role-rrops-border:    #993556; --role-rrops-text:    #72243E;
+  }
+
   body {
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
@@ -62,127 +72,56 @@
     top: 0;
     z-index: 50;
   }
-  .topbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
   .topbar-logo {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     background: var(--blue-mid);
     border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: #fff; letter-spacing: 0.02em;
   }
-  .topbar-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 0.02em;
-  }
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .topbar-label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.45);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+  .topbar-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: 0.02em; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .topbar-label { font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; }
 
   /* ── PROVIDER BAR ── */
   .provider-bar {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
   }
-  .pb-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .pb-label {
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-3);
-    white-space: nowrap;
-  }
+  .pb-group { display: flex; align-items: center; gap: 8px; }
+  .pb-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); white-space: nowrap; }
   select, input[type="text"] {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
+    font-size: 13px; font-weight: 500; color: var(--ink);
     background: var(--surface-1);
     border: 1px solid var(--border-strong);
     border-radius: var(--radius);
-    padding: 6px 10px;
-    outline: none;
-    transition: border-color 0.15s;
+    padding: 6px 10px; outline: none; transition: border-color 0.15s;
   }
-  select:focus, input[type="text"]:focus {
-    border-color: var(--blue-mid);
-    background: var(--surface);
-  }
+  select:focus, input[type="text"]:focus { border-color: var(--blue-mid); background: var(--surface); }
   select { min-width: 220px; cursor: pointer; }
   .initials-input { width: 72px; text-transform: uppercase; text-align: center; letter-spacing: 0.08em; }
   .initials-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--blue-bg);
-    color: var(--blue);
-    font-size: 11px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.05em;
-    border: 1px solid var(--border);
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--blue-bg); color: var(--blue);
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    letter-spacing: 0.05em; border: 1px solid var(--border);
   }
-  .pb-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--border);
-  }
-  .sync-status {
-    font-size: 11px;
-    color: var(--ink-3);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .sync-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--green-mid);
-  }
+  .pb-divider { width: 1px; height: 24px; background: var(--border); }
+  .sync-status { font-size: 11px; color: var(--ink-3); display: flex; align-items: center; gap: 5px; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-mid); }
   .sync-dot.syncing { background: var(--gold-mid); animation: pulse 1s infinite; }
   .sync-dot.error { background: var(--red); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
   /* ── OVERALL PROGRESS ── */
   .progress-strip {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 32px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 12px 32px; display: flex; align-items: center; gap: 16px;
   }
   .ps-label { font-size: 12px; color: var(--ink-3); white-space: nowrap; }
   .ps-bar-wrap { flex: 1; height: 5px; background: var(--surface-2); border-radius: 3px; overflow: hidden; max-width: 400px; }
@@ -191,64 +130,32 @@
   .ps-counts { font-size: 12px; color: var(--ink-3); }
 
   /* ── LAYOUT ── */
-  .main { max-width: 860px; margin: 0 auto; padding: 28px 24px 60px; }
+  .main { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
 
   /* ── PHASE HEADER ── */
   .phase-header {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    padding: 28px 0 10px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 14px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-3); padding: 28px 0 10px; border-bottom: 1px solid var(--border); margin-bottom: 14px;
   }
-  .phase-header span {
-    color: var(--ink-3);
-    font-weight: 400;
-    margin-left: 8px;
-    text-transform: none;
-    letter-spacing: 0;
-  }
+  .phase-header span { color: var(--ink-3); font-weight: 400; margin-left: 8px; text-transform: none; letter-spacing: 0; }
 
   /* ── STAGE BLOCK ── */
-  .stage-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
+  .stage-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 10px; overflow: hidden; }
   .stage-head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.12s;
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    cursor: pointer; user-select: none; transition: background 0.12s;
   }
   .stage-head:hover { background: var(--surface-1); }
   .stage-num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background: var(--surface-2);
-    color: var(--ink-2);
-    border: 1px solid var(--border);
-    transition: all 0.2s;
+    width: 28px; height: 28px; border-radius: 50%;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--border); transition: all 0.2s;
   }
-  .stage-num.complete { background: var(--green-bg); color: var(--green); border-color: var(--green-mid); }
-  .stage-num.blue-phase { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-mid); }
-  .stage-num.green-phase { background: var(--green-bg); color: var(--green); border-color: var(--green-mid); }
-  .stage-num.gold-phase { background: var(--gold-bg); color: var(--gold); border-color: var(--gold-mid); }
+  .stage-num.complete    { background: var(--green-bg);  color: var(--green); border-color: var(--green-mid); }
+  .stage-num.blue-phase  { background: var(--blue-bg);   color: var(--blue);  border-color: var(--blue-mid); }
+  .stage-num.green-phase { background: var(--green-bg);  color: var(--green); border-color: var(--green-mid); }
+  .stage-num.gold-phase  { background: var(--gold-bg);   color: var(--gold);  border-color: var(--gold-mid); }
 
   .stage-info { flex: 1; min-width: 0; }
   .stage-title { font-size: 13px; font-weight: 600; color: var(--ink); }
@@ -270,15 +177,31 @@
   .stage-body { display: none; border-top: 1px solid var(--border); }
   .stage-body.open { display: block; }
 
+  /* ── COLUMN HEADERS ── */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 22px 1fr 130px 110px 32px;
+    gap: 0 8px;
+    padding: 5px 16px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .col-headers span {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .col-headers span:nth-child(3) { text-align: center; }
+  .col-headers span:nth-child(4) { text-align: center; }
+
   /* ── ITEM ROW ── */
   .item-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 22px 1fr 130px 110px 32px;
+    gap: 0 8px;
     align-items: center;
-    gap: 12px;
-    padding: 9px 16px;
+    padding: 8px 16px;
     border-bottom: 1px solid var(--border);
-    cursor: pointer;
     transition: background 0.1s;
+    min-height: 40px;
   }
   .item-row:last-of-type { border-bottom: none; }
   .item-row:hover { background: var(--surface-1); }
@@ -286,109 +209,83 @@
   .item-row.checked:hover { background: #ecf8f2; }
 
   .item-check {
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid var(--border-strong);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.15s;
-    font-size: 11px;
-    color: transparent;
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-strong); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.15s; font-size: 11px; color: transparent;
+    cursor: pointer;
   }
-  .item-check.checked {
-    background: var(--green-mid);
-    border-color: var(--green-mid);
-    color: white;
-  }
+  .item-check.checked { background: var(--green-mid); border-color: var(--green-mid); color: white; }
 
   .item-text {
-    flex: 1;
-    font-size: 13px;
-    color: var(--ink);
-    line-height: 1.4;
+    font-size: 13px; color: var(--ink); line-height: 1.4; cursor: pointer;
   }
-  .item-row.checked .item-text {
-    color: var(--ink-3);
-    text-decoration: line-through;
-    text-decoration-color: var(--border-strong);
-  }
+  .item-row.checked .item-text { color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--border-strong); }
 
-  .item-sigs {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    min-width: 60px;
+  /* ── ASSIGNED COLUMN ── */
+  .item-assigned {
+    display: flex; gap: 3px; flex-wrap: wrap; align-items: center; justify-content: center;
   }
-  .sig-pill {
+  .assign-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    background: var(--blue-bg);
-    color: var(--blue);
-    padding: 2px 7px;
-    border-radius: 10px;
-    border: 1px solid #c5d9f0;
-    white-space: nowrap;
-    cursor: pointer;
-    title: "Click to remove your sign-off";
+    font-size: 9px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid transparent;
+    cursor: default;
+    flex-shrink: 0;
+    title: "";
   }
-  .sig-pill.me {
-    background: var(--green-bg);
-    color: var(--green);
-    border-color: #9ed4b8;
+  .assign-avatar.role-provider { background: var(--role-provider-bg); color: var(--role-provider-text); border-color: var(--role-provider-border); }
+  .assign-avatar.role-acct     { background: var(--role-acct-bg);     color: var(--role-acct-text);     border-color: var(--role-acct-border); }
+  .assign-avatar.role-sales    { background: var(--role-sales-bg);    color: var(--role-sales-text);    border-color: var(--role-sales-border); }
+  .assign-avatar.role-np       { background: var(--role-np-bg);       color: var(--role-np-text);       border-color: var(--role-np-border); }
+  .assign-avatar.role-support  { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .assign-avatar.role-rrops    { background: var(--role-rrops-bg);    color: var(--role-rrops-text);    border-color: var(--role-rrops-border); }
+
+  /* ── COMPLETED COLUMN ── */
+  .item-sigs { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  .sig-pill {
+    font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+    background: var(--blue-bg); color: var(--blue);
+    padding: 2px 6px; border-radius: 10px; border: 1px solid #c5d9f0;
+    white-space: nowrap; cursor: pointer;
   }
+  .sig-pill.me { background: var(--green-bg); color: var(--green); border-color: #9ed4b8; }
+
+  /* ── ASSIGN BUTTON ── */
+  .assign-btn {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: transparent; border: 1.5px dashed var(--border-strong);
+    color: var(--ink-3); font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+  }
+  .assign-btn:hover { background: var(--blue-bg); border-color: var(--blue-mid); color: var(--blue); }
 
   /* ── STAGE GATE ── */
   .stage-gate {
-    padding: 9px 16px;
-    background: var(--surface-1);
-    border-top: 1px solid var(--border);
-    font-size: 11.5px;
-    color: var(--ink-2);
-    font-style: italic;
+    padding: 9px 16px; background: var(--surface-1); border-top: 1px solid var(--border);
+    font-size: 11.5px; color: var(--ink-2); font-style: italic;
   }
   .stage-gate strong { font-style: normal; font-weight: 600; color: var(--ink); }
 
   /* ── EMPTY STATE ── */
-  .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--ink-3);
-  }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-3); }
   .empty-state h3 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--ink-2); }
   .empty-state p { font-size: 13px; }
 
-  /* ── ADD PROVIDER BUTTON ── */
+  /* ── BUTTONS ── */
   .add-provider-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--blue);
-    background: transparent;
-    border: 1px dashed var(--blue-mid);
-    border-radius: var(--radius);
-    padding: 5px 12px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.12s;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--blue); background: transparent; border: 1px dashed var(--blue-mid);
+    border-radius: var(--radius); padding: 5px 12px; cursor: pointer; white-space: nowrap; transition: background 0.12s;
   }
   .add-provider-btn:hover { background: var(--blue-bg); }
   .edit-provider-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink-3);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 5px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.12s;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--ink-3); background: transparent; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 5px 10px; cursor: pointer; white-space: nowrap; transition: all 0.12s;
     display: none;
   }
   .edit-provider-btn:hover { background: var(--surface-2); color: var(--ink); }
@@ -401,37 +298,72 @@
   .provider-form-row input { width: 100%; }
   .provider-form-hint { font-size: 11px; color: var(--ink-3); margin-top: -4px; }
 
+  /* ── ASSIGN MODAL SPECIFIC ── */
+  .assign-form { display: flex; flex-direction: column; gap: 14px; }
+  .assign-form-row { display: flex; flex-direction: column; gap: 5px; }
+  .assign-form-row label { font-size: 11px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .assign-form-row input, .assign-form-row select { width: 100%; }
+  .assign-add-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--blue); background: var(--blue-bg); border: 1px solid var(--blue-mid);
+    border-radius: var(--radius); padding: 6px 12px; cursor: pointer; transition: opacity 0.15s; align-self: flex-start;
+  }
+  .assign-add-btn:hover { opacity: 0.8; }
+  .assignee-list { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .assignee-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--border);
+    background: var(--surface-1); font-size: 12px;
+  }
+  .assignee-chip-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid transparent; flex-shrink: 0;
+  }
+  .assignee-chip-avatar.role-provider { background: var(--role-provider-bg); color: var(--role-provider-text); border-color: var(--role-provider-border); }
+  .assignee-chip-avatar.role-acct     { background: var(--role-acct-bg);     color: var(--role-acct-text);     border-color: var(--role-acct-border); }
+  .assignee-chip-avatar.role-sales    { background: var(--role-sales-bg);    color: var(--role-sales-text);    border-color: var(--role-sales-border); }
+  .assignee-chip-avatar.role-np       { background: var(--role-np-bg);       color: var(--role-np-text);       border-color: var(--role-np-border); }
+  .assignee-chip-avatar.role-support  { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .assignee-chip-avatar.role-rrops    { background: var(--role-rrops-bg);    color: var(--role-rrops-text);    border-color: var(--role-rrops-border); }
+  .assignee-chip-info { flex: 1; }
+  .assignee-chip-name { font-weight: 500; color: var(--ink); }
+  .assignee-chip-role { font-size: 10px; color: var(--ink-3); }
+  .assignee-chip-remove {
+    background: none; border: none; color: var(--ink-3); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1;
+  }
+  .assignee-chip-remove:hover { color: var(--red); }
+  .assign-empty { font-size: 12px; color: var(--ink-3); font-style: italic; }
+
+  /* ── ROLE SELECT COLORS ── */
+  .role-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px; border: 1px solid transparent;
+  }
+  .role-badge.role-provider { background: var(--role-provider-bg); color: var(--role-provider-text); border-color: var(--role-provider-border); }
+  .role-badge.role-acct     { background: var(--role-acct-bg);     color: var(--role-acct-text);     border-color: var(--role-acct-border); }
+  .role-badge.role-sales    { background: var(--role-sales-bg);    color: var(--role-sales-text);    border-color: var(--role-sales-border); }
+  .role-badge.role-np       { background: var(--role-np-bg);       color: var(--role-np-text);       border-color: var(--role-np-border); }
+  .role-badge.role-support  { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .role-badge.role-rrops    { background: var(--role-rrops-bg);    color: var(--role-rrops-text);    border-color: var(--role-rrops-border); }
+
   /* ── MODAL ── */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15,25,35,0.5);
-    z-index: 200;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    position: fixed; inset: 0; background: rgba(15,25,35,0.5);
+    z-index: 200; display: none; align-items: center; justify-content: center;
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    width: 320px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 24px; width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); max-height: 90vh; overflow-y: auto;
   }
   .modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
   .modal p { font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-bottom: 18px; }
-  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
   .btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 7px 16px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: opacity 0.15s;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    padding: 7px 16px; border-radius: var(--radius); cursor: pointer; border: 1px solid transparent; transition: opacity 0.15s;
   }
   .btn:hover { opacity: 0.85; }
   .btn-ghost { background: transparent; border-color: var(--border-strong); color: var(--ink-2); }
@@ -440,30 +372,21 @@
 
   /* ── TOAST ── */
   .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    background: var(--ink);
-    color: rgba(255,255,255,0.92);
-    font-size: 13px;
-    padding: 9px 18px;
-    border-radius: 20px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
-    white-space: nowrap;
-    z-index: 300;
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: var(--ink); color: rgba(255,255,255,0.92); font-size: 13px;
+    padding: 9px 18px; border-radius: 20px; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s; white-space: nowrap; z-index: 300;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .topbar { padding: 0 16px; }
     .provider-bar { padding: 12px 16px; }
     .progress-strip { padding: 10px 16px; }
     .main { padding: 16px 12px 48px; }
     select { min-width: 160px; }
+    .item-row, .col-headers { grid-template-columns: 22px 1fr 90px 80px 28px; }
   }
 </style>
 </head>
@@ -523,7 +446,7 @@
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3 id="modal-title"></h3>
-    <p id="modal-body"></p>
+    <div id="modal-body"></div>
     <div class="modal-actions" id="modal-actions"></div>
   </div>
 </div>
@@ -535,12 +458,27 @@
 // ─────────────────────────────────────────────
 // CONFIG
 // ─────────────────────────────────────────────
-const API_URL = 'https://rr-checklist-api.visual-edge.workers.dev/checklist';
+const API_URL       = 'https://rr-checklist-api.visual-edge.workers.dev/checklist';
 const PROVIDERS_URL = 'https://rr-checklist-api.visual-edge.workers.dev/providers';
 const JOURNEY_MAP_URL = 'https://stem-cell-video.visual-edge.workers.dev/journey-map.html';
 
-// providers loaded dynamically from KV — seeded with first provider
-let PROVIDERS = [];
+// ─────────────────────────────────────────────
+// ROLES
+// ─────────────────────────────────────────────
+const ROLES = [
+  { id: 'provider', label: 'Provider / Owner',  cls: 'role-provider' },
+  { id: 'acct',     label: 'Account Rep',        cls: 'role-acct'     },
+  { id: 'sales',    label: 'Sales Rep',           cls: 'role-sales'    },
+  { id: 'np',       label: 'NP / PA',             cls: 'role-np'       },
+  { id: 'support',  label: 'Support Staff',       cls: 'role-support'  },
+  { id: 'rrops',    label: 'RR Internal Ops',     cls: 'role-rrops'    },
+];
+function roleById(id) { return ROLES.find(r => r.id === id) || ROLES[0]; }
+function initialsFrom(name) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+  return name.trim().substring(0,2).toUpperCase();
+}
 
 // ─────────────────────────────────────────────
 // CHECKLIST DATA
@@ -836,16 +774,29 @@ const STAGES = [
 // STATE
 // ─────────────────────────────────────────────
 let currentProvider = '';
-let currentInitials = '';
-let checkData = {};       // { "s1_i0": { "TM": "2026-07-06 10:32", "JO": "..." }, ... }
-let pendingAction = null;
-let saveTimer = null;
+let currentInitials  = '';
+let PROVIDERS        = [];
 
-function itemKey(stageId, idx) { return `s${stageId}_i${idx}`; }
-function getItem(sId, idx) { return checkData[itemKey(sId, idx)] || null; }
+// checkData shape:
+// {
+//   "s1_i0": { sigs: { "TM": "Jul 6, 2026", ... }, assigned: [ { name, role, initials }, ... ] },
+//   ...
+// }
+let checkData    = {};
+let pendingAction = null;
+let saveTimer     = null;
+
+// Temporary assignee list being edited in the assign modal
+let pendingAssignees = [];
+
+function itemKey(sId, idx) { return `s${sId}_i${idx}`; }
+function getItemData(sId, idx) { return checkData[itemKey(sId, idx)] || null; }
+function getSigs(sId, idx)  { return getItemData(sId, idx)?.sigs || null; }
+function getAssigned(sId, idx) { return getItemData(sId, idx)?.assigned || []; }
+function isChecked(sId, idx) { const s = getSigs(sId, idx); return s && Object.keys(s).length > 0; }
 
 // ─────────────────────────────────────────────
-// API  (falls back to localStorage if no API configured)
+// API
 // ─────────────────────────────────────────────
 const USE_API = API_URL && !API_URL.includes('YOUR-WORKER');
 
@@ -856,12 +807,26 @@ async function loadFromAPI(providerId) {
     const r = await fetch(`${API_URL}?provider=${encodeURIComponent(providerId)}`);
     if (!r.ok) throw new Error(r.status);
     const json = await r.json();
-    checkData = json.data || {};
+    checkData = migrateLegacyData(json.data || {});
     setSyncStatus('ok', 'Synced');
   } catch(e) {
     setSyncStatus('error', 'Offline — using local');
     loadFromLocal(providerId);
   }
+}
+
+// Migrate old flat sig format → new {sigs, assigned} format
+function migrateLegacyData(raw) {
+  const out = {};
+  for (const [k, v] of Object.entries(raw)) {
+    if (v && typeof v === 'object' && !v.sigs && !v.assigned) {
+      // old format: { "TM": "date", ... }
+      out[k] = { sigs: v, assigned: [] };
+    } else {
+      out[k] = v;
+    }
+  }
+  return out;
 }
 
 async function saveToAPI() {
@@ -883,7 +848,7 @@ async function saveToAPI() {
 function loadFromLocal(providerId) {
   try {
     const raw = localStorage.getItem(`rr_checklist_${providerId}`);
-    checkData = raw ? JSON.parse(raw) : {};
+    checkData = migrateLegacyData(raw ? JSON.parse(raw) : {});
   } catch(e) { checkData = {}; }
 }
 
@@ -917,33 +882,24 @@ function buildChecklist() {
   document.getElementById('progress-strip').style.display = 'flex';
   let html = '';
   STAGES.forEach(stage => {
-    if (stage.phaseStart) {
-      html += `<div class="phase-header">${stage.phase}</div>`;
-    }
+    if (stage.phaseStart) html += `<div class="phase-header">${stage.phase}</div>`;
     html += buildStageHTML(stage);
   });
   container.innerHTML = html;
   updateOverall();
-  // open first incomplete stage automatically
-  const firstOpen = STAGES.find(s => {
-    const done = s.items.filter((_, i) => getItem(s.id, i) !== null).length;
-    return done < s.items.length;
-  });
+  const firstOpen = STAGES.find(s => s.items.some((_, i) => !isChecked(s.id, i)));
   if (firstOpen) {
-    const body = document.getElementById(`body-${firstOpen.id}`);
-    const chev = document.getElementById(`chev-${firstOpen.id}`);
-    if (body) { body.classList.add('open'); chev.classList.add('open'); }
+    document.getElementById(`body-${firstOpen.id}`)?.classList.add('open');
+    document.getElementById(`chev-${firstOpen.id}`)?.classList.add('open');
   }
 }
 
 function buildStageHTML(stage) {
   const total = stage.items.length;
-  const done = stage.items.filter((_, i) => getItem(stage.id, i) !== null).length;
-  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  const done  = stage.items.filter((_, i) => isChecked(stage.id, i)).length;
+  const pct   = total > 0 ? Math.round(done / total * 100) : 0;
   const complete = done === total;
-
   const numClass = complete ? 'complete' : stage.color;
-  const barColor = stage.color;
 
   const itemsHTML = stage.items.map((item, i) => buildItemHTML(stage.id, i, item)).join('');
 
@@ -955,7 +911,7 @@ function buildStageHTML(stage) {
       <div class="stage-title">${stage.title}</div>
       <div class="stage-sub">${stage.sub}</div>
       <div class="stage-mini-bar-wrap">
-        <div class="stage-mini-bar ${barColor}" style="width:${pct}%"></div>
+        <div class="stage-mini-bar ${stage.color}" style="width:${pct}%"></div>
       </div>
     </div>
     <div class="stage-count">${done}/${total}</div>
@@ -963,6 +919,13 @@ function buildStageHTML(stage) {
     <div class="stage-chevron" id="chev-${stage.id}">▾</div>
   </div>
   <div class="stage-body" id="body-${stage.id}">
+    <div class="col-headers">
+      <span></span>
+      <span>Task</span>
+      <span>Assigned</span>
+      <span>Completed</span>
+      <span></span>
+    </div>
     ${itemsHTML}
     <div class="stage-gate"><strong>Stage gate:</strong> ${stage.gate}</div>
   </div>
@@ -970,19 +933,32 @@ function buildStageHTML(stage) {
 }
 
 function buildItemHTML(stageId, idx, text) {
-  const rec = getItem(stageId, idx);
-  const checked = rec !== null;
-  const checkMark = checked ? '✓' : '';
-  const sigs = rec
-    ? Object.entries(rec).map(([u, ts]) =>
+  const sigs     = getSigs(stageId, idx);
+  const checked  = sigs && Object.keys(sigs).length > 0;
+  const assigned = getAssigned(stageId, idx);
+
+  // Assigned avatars
+  const avatarsHTML = assigned.length
+    ? assigned.map(a => {
+        const role = roleById(a.role);
+        return `<div class="assign-avatar ${role.cls}" title="${a.name} · ${role.label}">${a.initials}</div>`;
+      }).join('')
+    : '';
+
+  // Completed pills
+  const sigsHTML = sigs
+    ? Object.entries(sigs).map(([u, ts]) =>
         `<span class="sig-pill ${u === currentInitials ? 'me' : ''}" title="${ts} — click to remove" onclick="removeSig(event,${stageId},${idx},'${u}')">${u}</span>`
       ).join('')
     : '';
+
   return `
-<div class="item-row ${checked ? 'checked' : ''}" id="item-${stageId}-${idx}" onclick="itemClick(${stageId},${idx})">
-  <div class="item-check ${checked ? 'checked' : ''}">${checkMark}</div>
-  <div class="item-text">${text}</div>
-  <div class="item-sigs">${sigs}</div>
+<div class="item-row ${checked ? 'checked' : ''}" id="item-${stageId}-${idx}">
+  <div class="item-check ${checked ? 'checked' : ''}" onclick="itemClick(${stageId},${idx})">${checked ? '✓' : ''}</div>
+  <div class="item-text" onclick="itemClick(${stageId},${idx})">${text}</div>
+  <div class="item-assigned">${avatarsHTML}</div>
+  <div class="item-sigs">${sigsHTML}</div>
+  <button class="assign-btn" onclick="showAssignModal(event,${stageId},${idx})" title="Assign / edit people">＋</button>
 </div>`;
 }
 
@@ -1003,7 +979,7 @@ function updateOverall() {
   let total = 0, done = 0;
   STAGES.forEach(s => {
     total += s.items.length;
-    done += s.items.filter((_, i) => getItem(s.id, i) !== null).length;
+    done  += s.items.filter((_, i) => isChecked(s.id, i)).length;
   });
   const pct = total > 0 ? Math.round(done / total * 100) : 0;
   document.getElementById('overall-bar').style.width = pct + '%';
@@ -1012,42 +988,39 @@ function updateOverall() {
 }
 
 // ─────────────────────────────────────────────
-// INTERACTIONS
+// COMPLETE / SIGN-OFF INTERACTIONS
 // ─────────────────────────────────────────────
 function toggleStage(id) {
-  const body = document.getElementById(`body-${id}`);
-  const chev = document.getElementById(`chev-${id}`);
-  if (!body) return;
-  body.classList.toggle('open');
-  chev.classList.toggle('open');
+  document.getElementById(`body-${id}`)?.classList.toggle('open');
+  document.getElementById(`chev-${id}`)?.classList.toggle('open');
 }
 
 function itemClick(stageId, idx) {
   if (!currentProvider) { showToast('Select a provider first'); return; }
   if (!currentInitials)  { showToast('Enter your initials first'); return; }
-  const rec = getItem(stageId, idx);
+  const sigs = getSigs(stageId, idx);
   const text = STAGES.find(s => s.id === stageId).items[idx];
-  const alreadySigned = rec && rec[currentInitials];
-  pendingAction = { stageId, idx, text, rec, alreadySigned };
+  const alreadySigned = sigs && sigs[currentInitials];
+  pendingAction = { type: 'complete', stageId, idx, alreadySigned };
 
   if (alreadySigned) {
-    showModal(
+    showSimpleModal(
       'Remove your sign-off?',
       `Remove ${currentInitials} from "${text}"?`,
       [
-        { label: 'Cancel',  cls: 'btn-ghost', action: closeModal },
-        { label: 'Remove',  cls: 'btn-red',   action: confirmAction },
+        { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
+        { label: 'Remove', cls: 'btn-red',   action: confirmComplete },
       ]
     );
   } else {
-    showModal(
+    showSimpleModal(
       'Sign off this item?',
-      rec
+      sigs
         ? `Add ${currentInitials} to existing sign-offs on "${text}".`
         : `Record ${currentInitials} · ${new Date().toLocaleDateString()} on "${text}".`,
       [
         { label: 'Cancel',   cls: 'btn-ghost', action: closeModal },
-        { label: 'Sign off', cls: 'btn-green', action: confirmAction },
+        { label: 'Sign off', cls: 'btn-green', action: confirmComplete },
       ]
     );
   }
@@ -1056,59 +1029,195 @@ function itemClick(stageId, idx) {
 function removeSig(e, stageId, idx, user) {
   e.stopPropagation();
   if (user !== currentInitials) { showToast('You can only remove your own sign-off'); return; }
-  pendingAction = { stageId, idx, alreadySigned: true };
+  pendingAction = { type: 'complete', stageId, idx, alreadySigned: true };
   const text = STAGES.find(s => s.id === stageId).items[idx];
-  showModal(
+  showSimpleModal(
     'Remove your sign-off?',
     `Remove ${currentInitials} from "${text}"?`,
     [
       { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
-      { label: 'Remove', cls: 'btn-red',   action: confirmAction },
+      { label: 'Remove', cls: 'btn-red',   action: confirmComplete },
     ]
   );
 }
 
-async function confirmAction() {
-  if (!pendingAction) return;
+function confirmComplete() {
+  if (!pendingAction || pendingAction.type !== 'complete') return;
   const { stageId, idx, alreadySigned } = pendingAction;
   const key = itemKey(stageId, idx);
+  const existing = checkData[key] || { sigs: {}, assigned: [] };
 
   if (alreadySigned) {
-    if (checkData[key]) {
-      delete checkData[key][currentInitials];
-      if (Object.keys(checkData[key]).length === 0) delete checkData[key];
+    delete existing.sigs[currentInitials];
+    if (Object.keys(existing.sigs).length === 0 && existing.assigned.length === 0) {
+      delete checkData[key];
+    } else {
+      checkData[key] = existing;
     }
     showToast(`${currentInitials} removed`);
   } else {
     const ts = new Date().toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
-    checkData[key] = { ...(checkData[key] || {}), [currentInitials]: ts };
+    existing.sigs[currentInitials] = ts;
+    checkData[key] = existing;
     showToast(`Signed off — ${currentInitials}`);
   }
-
   closeModal();
   refreshStage(stageId);
   debouncedSave();
 }
 
 // ─────────────────────────────────────────────
-// MODAL
+// ASSIGN MODAL
 // ─────────────────────────────────────────────
-function showModal(title, body, buttons, formHTML) {
+function showAssignModal(e, stageId, idx) {
+  e.stopPropagation();
+  if (!currentProvider) { showToast('Select a provider first'); return; }
+  const text = STAGES.find(s => s.id === stageId).items[idx];
+  pendingAssignees = JSON.parse(JSON.stringify(getAssigned(stageId, idx)));
+  pendingAction = { type: 'assign', stageId, idx };
+
+  const overlay = document.getElementById('modal-overlay');
+  const titleEl = document.getElementById('modal-title');
+  const bodyEl  = document.getElementById('modal-body');
+  const actsEl  = document.getElementById('modal-actions');
+
+  titleEl.textContent = 'Assign people';
+
+  bodyEl.innerHTML = `
+<p style="font-size:12px;color:var(--ink-3);margin-bottom:14px;">${text}</p>
+<div class="assign-form">
+  <div id="assignee-list-wrap"></div>
+  <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;">
+    <div style="font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Add person</div>
+    <div class="assign-form-row">
+      <label>Role</label>
+      <select id="assign-role">
+        ${ROLES.map(r => `<option value="${r.id}">${r.label}</option>`).join('')}
+      </select>
+    </div>
+    <div class="assign-form-row" style="margin-top:8px;">
+      <label>Full name</label>
+      <input type="text" id="assign-name" placeholder="e.g. Dana Cook" autocomplete="off" />
+    </div>
+    <button class="assign-add-btn" style="margin-top:10px;" onclick="addAssignee()">+ Add to list</button>
+  </div>
+</div>`;
+
+  actsEl.innerHTML = '';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-ghost';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = closeModal;
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'btn btn-green';
+  saveBtn.textContent = 'Save';
+  saveBtn.onclick = confirmAssign;
+  actsEl.appendChild(cancelBtn);
+  actsEl.appendChild(saveBtn);
+
+  overlay.classList.add('open');
+  renderAssigneeList();
+
+  // Allow Enter key to add
+  setTimeout(() => {
+    document.getElementById('assign-name')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); addAssignee(); }
+    });
+  }, 50);
+}
+
+function renderAssigneeList() {
+  const wrap = document.getElementById('assignee-list-wrap');
+  if (!wrap) return;
+  if (pendingAssignees.length === 0) {
+    wrap.innerHTML = '<div class="assign-empty">No one assigned yet.</div>';
+    return;
+  }
+  wrap.innerHTML = `<div class="assignee-list">${
+    pendingAssignees.map((a, i) => {
+      const role = roleById(a.role);
+      return `
+<div class="assignee-chip">
+  <div class="assignee-chip-avatar ${role.cls}">${a.initials}</div>
+  <div class="assignee-chip-info">
+    <div class="assignee-chip-name">${a.name}</div>
+    <div class="assignee-chip-role">${role.label}</div>
+  </div>
+  <button class="assignee-chip-remove" onclick="removeAssignee(${i})" title="Remove">×</button>
+</div>`;
+    }).join('')
+  }</div>`;
+}
+
+function addAssignee() {
+  const roleId = document.getElementById('assign-role')?.value;
+  const name   = document.getElementById('assign-name')?.value.trim();
+  if (!name) { showToast('Enter a name'); return; }
+  const initials = initialsFrom(name);
+  // Prevent exact duplicate name+role
+  if (pendingAssignees.find(a => a.name.toLowerCase() === name.toLowerCase() && a.role === roleId)) {
+    showToast('Already in list'); return;
+  }
+  pendingAssignees.push({ name, role: roleId, initials });
+  document.getElementById('assign-name').value = '';
+  document.getElementById('assign-name').focus();
+  renderAssigneeList();
+}
+
+function removeAssignee(idx) {
+  pendingAssignees.splice(idx, 1);
+  renderAssigneeList();
+}
+
+function confirmAssign() {
+  if (!pendingAction || pendingAction.type !== 'assign') return;
+  const { stageId, idx } = pendingAction;
+  const key = itemKey(stageId, idx);
+  const existing = checkData[key] || { sigs: {}, assigned: [] };
+  existing.assigned = pendingAssignees;
+  if (Object.keys(existing.sigs).length === 0 && existing.assigned.length === 0) {
+    delete checkData[key];
+  } else {
+    checkData[key] = existing;
+  }
+  closeModal();
+  refreshStage(stageId);
+  debouncedSave();
+  showToast(pendingAssignees.length ? `${pendingAssignees.length} person${pendingAssignees.length > 1 ? 's' : ''} assigned` : 'Assignments cleared');
+}
+
+// ─────────────────────────────────────────────
+// MODAL HELPERS
+// ─────────────────────────────────────────────
+function showSimpleModal(title, bodyText, buttons) {
   document.getElementById('modal-title').textContent = title;
   const bodyEl = document.getElementById('modal-body');
-  if (formHTML) {
-    bodyEl.innerHTML = formHTML;
-  } else {
-    bodyEl.textContent = body;
-  }
-  const acts = document.getElementById('modal-actions');
-  acts.innerHTML = '';
+  bodyEl.innerHTML = `<p>${bodyText}</p>`;
+  const actsEl = document.getElementById('modal-actions');
+  actsEl.innerHTML = '';
   buttons.forEach(b => {
     const btn = document.createElement('button');
     btn.className = `btn ${b.cls}`;
     btn.textContent = b.label;
     btn.onclick = b.action;
-    acts.appendChild(btn);
+    actsEl.appendChild(btn);
+  });
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+// Legacy showModal kept for provider forms
+function showModal(title, body, buttons, formHTML) {
+  document.getElementById('modal-title').textContent = title;
+  const bodyEl = document.getElementById('modal-body');
+  bodyEl.innerHTML = formHTML || `<p>${body}</p>`;
+  const actsEl = document.getElementById('modal-actions');
+  actsEl.innerHTML = '';
+  buttons.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = `btn ${b.cls}`;
+    btn.textContent = b.label;
+    btn.onclick = b.action;
+    actsEl.appendChild(btn);
   });
   document.getElementById('modal-overlay').classList.add('open');
 }
@@ -1145,13 +1254,11 @@ async function loadProviders() {
       PROVIDERS = json.providers || [];
     }
   } catch(e) {
-    // fallback: try localStorage
     try {
       const raw = localStorage.getItem('rr_providers');
       if (raw) PROVIDERS = JSON.parse(raw);
     } catch(e2) {}
   }
-  // seed first provider if KV is empty
   if (PROVIDERS.length === 0) {
     PROVIDERS = [{ id: 'rr-001-dubov-cali-ny-nj', label: 'RR-001 · Dubov/Cali — NY/NJ' }];
     await saveProviders();
@@ -1173,15 +1280,12 @@ async function saveProviders() {
 
 function populateProviderSelect() {
   const sel = document.getElementById('provider-select');
-  // clear existing options except first placeholder
   while (sel.options.length > 1) sel.remove(1);
   PROVIDERS.forEach(p => {
     const opt = document.createElement('option');
-    opt.value = p.id;
-    opt.textContent = p.label;
+    opt.value = p.id; opt.textContent = p.label;
     sel.appendChild(opt);
   });
-  // restore last used
   const saved = localStorage.getItem('rr_last_provider');
   if (saved && PROVIDERS.find(p => p.id === saved)) {
     sel.value = saved;
@@ -1196,8 +1300,7 @@ document.getElementById('provider-select').addEventListener('change', function()
 async function handleProviderChange(id) {
   currentProvider = id;
   checkData = {};
-  const editBtn = document.getElementById('edit-provider-btn');
-  if (editBtn) editBtn.classList.toggle('visible', !!id);
+  document.getElementById('edit-provider-btn')?.classList.toggle('visible', !!id);
   if (id) {
     localStorage.setItem('rr_last_provider', id);
     await loadFromAPI(id);
@@ -1214,14 +1317,12 @@ document.getElementById('initials-input').addEventListener('input', function() {
 });
 
 // ─────────────────────────────────────────────
-// ADD PROVIDER
+// ADD / EDIT PROVIDER
 // ─────────────────────────────────────────────
 function showAddProvider() {
-  showModal(
-    'Add new provider',
-    '',
+  showModal('Add new provider', '',
     [
-      { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
+      { label: 'Cancel',       cls: 'btn-ghost', action: closeModal },
       { label: 'Add provider', cls: 'btn-green', action: submitNewProvider },
     ],
     `<div class="provider-form">
@@ -1240,42 +1341,34 @@ function showAddProvider() {
       </div>
     </div>`
   );
-  // suggest next RR number
   const nums = PROVIDERS.map(p => parseInt(p.id.replace('rr-','').split('-')[0]) || 0);
-  const next = (Math.max(0, ...nums) + 1).toString().padStart(3, '0');
-  setTimeout(() => { const el = document.getElementById('new-rr-num'); if(el) el.value = next; }, 50);
+  const next = (Math.max(0, ...nums) + 1).toString().padStart(3,'0');
+  setTimeout(() => { const el = document.getElementById('new-rr-num'); if (el) el.value = next; }, 50);
 }
 
 function showEditProvider() {
   const provider = PROVIDERS.find(p => p.id === currentProvider);
   if (!provider) return;
-  // parse existing label: "RR-001 · Dubov/Cali — NY/NJ"
   const numMatch = provider.label.match(/RR-(\d+)/);
   const midMatch = provider.label.match(/· (.+) — (.+)$/);
-  const currentNum  = numMatch ? numMatch[1] : '';
-  const currentLast = midMatch ? midMatch[1] : '';
-  const currentCity = midMatch ? midMatch[2] : '';
-
-  showModal(
-    'Edit provider',
-    '',
+  showModal('Edit provider', '',
     [
-      { label: 'Cancel',  cls: 'btn-ghost', action: closeModal },
-      { label: 'Delete',  cls: 'btn-red',   action: deleteProvider },
-      { label: 'Save',    cls: 'btn-green',  action: saveEditProvider },
+      { label: 'Cancel', cls: 'btn-ghost', action: closeModal },
+      { label: 'Delete', cls: 'btn-red',   action: deleteProvider },
+      { label: 'Save',   cls: 'btn-green', action: saveEditProvider },
     ],
     `<div class="provider-form">
       <div class="provider-form-row">
         <label>RR Number</label>
-        <input type="text" id="edit-rr-num" value="${currentNum}" maxlength="6" />
+        <input type="text" id="edit-rr-num" value="${numMatch?.[1]||''}" maxlength="6" />
       </div>
       <div class="provider-form-row">
         <label>Last name / names</label>
-        <input type="text" id="edit-last-name" value="${currentLast}" />
+        <input type="text" id="edit-last-name" value="${midMatch?.[1]||''}" />
       </div>
       <div class="provider-form-row">
         <label>City / region</label>
-        <input type="text" id="edit-city" value="${currentCity}" />
+        <input type="text" id="edit-city" value="${midMatch?.[2]||''}" />
         <span class="provider-form-hint">Slashes OK — e.g. NY/NJ or Dallas/Fort Worth</span>
       </div>
     </div>`
@@ -1283,21 +1376,16 @@ function showEditProvider() {
 }
 
 async function saveEditProvider() {
-
   const num  = document.getElementById('edit-rr-num')?.value.trim().padStart(3,'0');
   const last = document.getElementById('edit-last-name')?.value.trim();
   const city = document.getElementById('edit-city')?.value.trim();
   if (!num || !last || !city) { showToast('Fill in all three fields'); return; }
-
   const newLabel = `RR-${num} · ${last} — ${city}`;
   const idx = PROVIDERS.findIndex(p => p.id === currentProvider);
   if (idx === -1) return;
-
-  // update label only — keep same ID so checklist data is preserved
   PROVIDERS[idx] = { id: currentProvider, label: newLabel };
   await saveProviders();
   populateProviderSelect();
-  // re-select the same provider
   document.getElementById('provider-select').value = currentProvider;
   closeModal();
   showToast(`Renamed to ${newLabel}`);
@@ -1305,19 +1393,16 @@ async function saveEditProvider() {
 
 async function deleteProvider() {
   const provider = PROVIDERS.find(p => p.id === currentProvider);
-  if (!confirm(`Delete "${provider?.label}"? This cannot be undone and will remove all checklist data for this provider.`)) return;
+  if (!confirm(`Delete "${provider?.label}"? This cannot be undone.`)) return;
   PROVIDERS = PROVIDERS.filter(p => p.id !== currentProvider);
   await saveProviders();
-  // also clear checklist data from KV
   try {
     await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ provider: currentProvider, data: {} }),
     });
   } catch(e) {}
-  currentProvider = '';
-  checkData = {};
+  currentProvider = ''; checkData = {};
   closeModal();
   populateProviderSelect();
   document.getElementById('provider-select').value = '';
@@ -1330,21 +1415,16 @@ async function submitNewProvider() {
   const num  = document.getElementById('new-rr-num')?.value.trim().padStart(3,'0');
   const last = document.getElementById('new-last-name')?.value.trim();
   const city = document.getElementById('new-city')?.value.trim();
-
   if (!num || !last || !city) { showToast('Fill in all three fields'); return; }
-
   const id    = `rr-${num}-${last.toLowerCase().replace(/[\s\/]+/g,'-')}-${city.toLowerCase().replace(/[\s\/]+/g,'-')}`;
   const label = `RR-${num} · ${last} — ${city}`;
-
   if (PROVIDERS.find(p => p.id === id)) { showToast('Provider already exists'); return; }
-
   PROVIDERS.push({ id, label });
   PROVIDERS.sort((a, b) => a.id.localeCompare(b.id));
   await saveProviders();
   populateProviderSelect();
   closeModal();
-  const sel = document.getElementById('provider-select');
-  sel.value = id;
+  document.getElementById('provider-select').value = id;
   handleProviderChange(id);
   showToast(`${label} added`);
 }
