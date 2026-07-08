@@ -246,12 +246,16 @@
   /* ── COMPLETED COLUMN ── */
   .item-sigs { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; align-items: center; }
   .sig-pill {
-    font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
-    background: var(--blue-bg); color: var(--blue);
-    padding: 2px 6px; border-radius: 10px; border: 1px solid #c5d9f0;
-    white-space: nowrap; cursor: pointer;
+    width: 26px; height: 26px; border-radius: 50%;
+    font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2); color: var(--ink-2);
+    border: 1.5px solid var(--border-strong);
+    cursor: pointer; flex-shrink: 0;
   }
-  .sig-pill.me { background: var(--green-bg); color: var(--green); border-color: #9ed4b8; }
+  .sig-pill.me {
+    background: var(--green-bg); color: var(--green); border-color: var(--green-mid);
+  }
 
   /* ── ASSIGN BUTTON ── */
   .assign-btn {
@@ -379,6 +383,56 @@
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ── FILTER DROPDOWN ── */
+  .filter-trigger {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--ink-2); background: var(--surface-1); border: 1px solid var(--border-strong);
+    border-radius: var(--radius); padding: 5px 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; white-space: nowrap;
+    transition: border-color 0.15s;
+  }
+  .filter-trigger:hover, .filter-trigger.active { border-color: var(--blue-mid); color: var(--blue); background: var(--blue-bg); }
+  .filter-dropdown-wrap { position: relative; }
+  .filter-dropdown {
+    position: absolute; top: calc(100% + 4px); left: 0;
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg); box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    min-width: 200px; z-index: 100; display: none; padding: 8px 0;
+  }
+  .filter-dropdown.open { display: block; }
+  .filter-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 14px; cursor: pointer; transition: background 0.1s;
+    font-size: 12px; color: var(--ink);
+  }
+  .filter-option:hover { background: var(--surface-1); }
+  .filter-option input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--blue-mid); cursor: pointer; flex-shrink: 0; }
+  .filter-option-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    font-family: 'DM Mono', monospace; font-size: 8px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid transparent; flex-shrink: 0;
+  }
+  .filter-option-avatar.role-provider { background: var(--role-provider-bg); color: var(--role-provider-text); border-color: var(--role-provider-border); }
+  .filter-option-avatar.role-acct     { background: var(--role-acct-bg);     color: var(--role-acct-text);     border-color: var(--role-acct-border); }
+  .filter-option-avatar.role-sales    { background: var(--role-sales-bg);    color: var(--role-sales-text);    border-color: var(--role-sales-border); }
+  .filter-option-avatar.role-np       { background: var(--role-np-bg);       color: var(--role-np-text);       border-color: var(--role-np-border); }
+  .filter-option-avatar.role-support  { background: var(--role-support-bg);  color: var(--role-support-text);  border-color: var(--role-support-border); }
+  .filter-option-avatar.role-rrops    { background: var(--role-rrops-bg);    color: var(--role-rrops-text);    border-color: var(--role-rrops-border); }
+  .filter-option-name { flex: 1; }
+  .filter-option-role { font-size: 10px; color: var(--ink-3); }
+  .filter-divider { height: 1px; background: var(--border); margin: 6px 0; }
+  .filter-clear-btn {
+    display: block; width: 100%; text-align: left;
+    padding: 7px 14px; font-size: 12px; color: var(--blue); font-weight: 500;
+    background: none; border: none; cursor: pointer;
+  }
+  .filter-clear-btn:hover { background: var(--blue-bg); }
+
+  /* ── DIMMED ROWS ── */
+  .item-row.dimmed { opacity: 0.25; pointer-events: none; }
+  .stage-block.all-dimmed > .stage-head { opacity: 0.4; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     .topbar { padding: 0 16px; }
@@ -418,6 +472,17 @@
     <span class="pb-label">Your initials</span>
     <input type="text" class="initials-input" id="initials-input" maxlength="4" placeholder="TM" autocomplete="off" />
     <div class="initials-avatar" id="initials-avatar">—</div>
+  </div>
+  <div class="pb-divider"></div>
+  <div class="pb-group" id="filter-group" style="display:none">
+    <span class="pb-label">Filter by</span>
+    <div class="filter-dropdown-wrap" id="filter-dropdown-wrap">
+      <button class="filter-trigger" id="filter-trigger" onclick="toggleFilterDropdown()">
+        <span id="filter-trigger-label">All people</span>
+        <span style="font-size:10px;opacity:0.6;">▾</span>
+      </button>
+      <div class="filter-dropdown" id="filter-dropdown"></div>
+    </div>
   </div>
   <div class="pb-divider"></div>
   <div class="sync-status" id="sync-status">
@@ -887,6 +952,8 @@ function buildChecklist() {
   });
   container.innerHTML = html;
   updateOverall();
+  buildFilterDropdown();
+  applyFilter();
   const firstOpen = STAGES.find(s => s.items.some((_, i) => !isChecked(s.id, i)));
   if (firstOpen) {
     document.getElementById(`body-${firstOpen.id}`)?.classList.add('open');
@@ -1182,6 +1249,8 @@ function confirmAssign() {
   }
   closeModal();
   refreshStage(stageId);
+  buildFilterDropdown();
+  applyFilter();
   debouncedSave();
   showToast(pendingAssignees.length ? `${pendingAssignees.length} person${pendingAssignees.length > 1 ? 's' : ''} assigned` : 'Assignments cleared');
 }
@@ -1428,6 +1497,130 @@ async function submitNewProvider() {
   handleProviderChange(id);
   showToast(`${label} added`);
 }
+
+// ─────────────────────────────────────────────
+// FILTER
+// ─────────────────────────────────────────────
+let activeFilters = new Set(); // set of person names
+let filterOpen = false;
+
+function getAllAssignedPeople() {
+  // Returns array of unique {name, role, initials} across all items for current provider
+  const seen = new Set();
+  const people = [];
+  for (const val of Object.values(checkData)) {
+    if (!val?.assigned) continue;
+    for (const a of val.assigned) {
+      if (!seen.has(a.name)) {
+        seen.add(a.name);
+        people.push(a);
+      }
+    }
+  }
+  return people.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function buildFilterDropdown() {
+  const people = getAllAssignedPeople();
+  const group = document.getElementById('filter-group');
+  const dropdown = document.getElementById('filter-dropdown');
+  if (!dropdown) return;
+
+  // Show/hide filter group
+  if (group) group.style.display = people.length > 0 ? 'flex' : 'none';
+
+  if (people.length === 0) { activeFilters.clear(); return; }
+
+  let html = `<button class="filter-clear-btn" onclick="clearFilter()">Show all</button>
+<div class="filter-divider"></div>`;
+
+  people.forEach(p => {
+    const role = roleById(p.role);
+    const checked = activeFilters.has(p.name) ? 'checked' : '';
+    html += `
+<label class="filter-option">
+  <input type="checkbox" ${checked} onchange="toggleFilterPerson('${p.name.replace(/'/g,"\'")}', this.checked)" />
+  <div class="filter-option-avatar ${role.cls}">${p.initials}</div>
+  <div>
+    <div class="filter-option-name">${p.name}</div>
+    <div class="filter-option-role">${role.label}</div>
+  </div>
+</label>`;
+  });
+
+  dropdown.innerHTML = html;
+  updateFilterTriggerLabel(people);
+}
+
+function updateFilterTriggerLabel(people) {
+  const lbl = document.getElementById('filter-trigger-label');
+  const trigger = document.getElementById('filter-trigger');
+  if (!lbl) return;
+  people = people || getAllAssignedPeople();
+  if (activeFilters.size === 0) {
+    lbl.textContent = 'All people';
+    trigger?.classList.remove('active');
+  } else if (activeFilters.size === 1) {
+    lbl.textContent = [...activeFilters][0].split(' ')[0]; // first name only
+    trigger?.classList.add('active');
+  } else {
+    lbl.textContent = `${activeFilters.size} people`;
+    trigger?.classList.add('active');
+  }
+}
+
+function toggleFilterDropdown() {
+  filterOpen = !filterOpen;
+  document.getElementById('filter-dropdown')?.classList.toggle('open', filterOpen);
+}
+
+function toggleFilterPerson(name, checked) {
+  if (checked) activeFilters.add(name);
+  else activeFilters.delete(name);
+  updateFilterTriggerLabel();
+  applyFilter();
+}
+
+function clearFilter() {
+  activeFilters.clear();
+  buildFilterDropdown();
+  applyFilter();
+  // close dropdown
+  filterOpen = false;
+  document.getElementById('filter-dropdown')?.classList.remove('open');
+}
+
+function applyFilter() {
+  if (activeFilters.size === 0) {
+    // Remove all dimming
+    document.querySelectorAll('.item-row.dimmed').forEach(r => r.classList.remove('dimmed'));
+    document.querySelectorAll('.stage-block.all-dimmed').forEach(b => b.classList.remove('all-dimmed'));
+    return;
+  }
+
+  STAGES.forEach(stage => {
+    let anyVisible = false;
+    stage.items.forEach((_, idx) => {
+      const assigned = getAssigned(stage.id, idx);
+      const matches = assigned.some(a => activeFilters.has(a.name));
+      const row = document.getElementById(`item-${stage.id}-${idx}`);
+      if (row) {
+        row.classList.toggle('dimmed', !matches);
+        if (matches) anyVisible = true;
+      }
+    });
+    const block = document.getElementById(`stage-${stage.id}`);
+    if (block) block.classList.toggle('all-dimmed', !anyVisible);
+  });
+}
+
+// Close filter dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (filterOpen && !document.getElementById('filter-dropdown-wrap')?.contains(e.target)) {
+    filterOpen = false;
+    document.getElementById('filter-dropdown')?.classList.remove('open');
+  }
+});
 
 // ─────────────────────────────────────────────
 // INIT
